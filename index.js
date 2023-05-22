@@ -38,7 +38,7 @@ app.use('/power', powerRoute);
 
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.send('Welcome to Borrowlite Api!')
 })
 
 //connect to mongodb
