@@ -4,22 +4,15 @@ import { MONGO_URL } from './config/index.js';
 import mongoose from 'mongoose';
 import cors from 'cors';
 const port = process.env.PORT || 5000;
-
-
-
 const corsOptions ={
- origin:'https://borrowlite.com', 
+ origin:'http://localhost:5000', 
   credentials:true,            //access-control-allow-credentials:true
   optionSuccessStatus:200
 }
 
-
-
 const app = express();
 app.use(bodyParser.json()); 
 app.use(bodyParser.urlencoded({ extended: true }));
-
-
 app.use(cors(corsOptions));
 
 // app.use(function(req, res, next) {
