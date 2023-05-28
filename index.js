@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 const port = process.env.PORT || 5000;
 const corsOptions ={
- origin:'http://localhost:5000', 
+ origin:'http://localhost:3001', 
   credentials:true,            //access-control-allow-credentials:true
   optionSuccessStatus:200
 }
