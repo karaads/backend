@@ -6,17 +6,17 @@ import { hashPassword, welcomeEmail } from "../../utils/Index.js";
 //uuidv4();
 export const Signup = async (req, res) => {
    
-    const { firstName, lastName, email, address, city, state, zip, phoneNumber, dateOfBirth, userType } = req.body;
+    const { firstName, lastName, email, address, city, state, zip, phoneNumber, dateOfBirth, userType, vendorCode } = req.body;
     //math.random
     const apiKey = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
     const password = await hashPassword(req.body.password);
-    const user = new User({ firstName, lastName, email, password, address, city, state, zip, phoneNumber, dateOfBirth, apiKey, userType});
+    const user = new User({ firstName, lastName, email, password, address, city, state, zip, phoneNumber, dateOfBirth, apiKey, userType, vendorCode});
     try {
         //check if user with email already exists
         const userExists = await User.findOne({ phoneNumber });
         if (userExists) {
             console.log(userExists)
-            return res.status(201).send({ msg: "User already exist" });
+            return res.status(401).send({ msg: "User already exist" });
         }
         //save user to database
         await user.save();

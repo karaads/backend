@@ -5,8 +5,10 @@ export const InitializePayment = async (req, res) => {
    console.log('here working ....')
     // initialize paystact payment
     const email = req.body.email;
-    const amount = 3000;
-    const callback_url = 'https://borrowlite.com/AuthCodePage';
+    const amount = 5000;
+    const callback_url = 'https://borrowlite.com/';
+  // const callback_url = 'http://localhost:3000/detailspage';
+
 
 
     const options = {
@@ -17,8 +19,8 @@ export const InitializePayment = async (req, res) => {
             'Accept': 'application/json',
             'Accept-Charset': 'utf-8',
             'Content-Type': 'application/json',
-           // 'Authorization' :'Bearer sk_test_1ae4fcb00d9fe5e4ac4bc7a3474ba883c836f0b2',
-            'Authorization' :'Bearer sk_live_3e48c6f03ba238bd609d43f699e04c7d23473d4b',
+           'Authorization' :'Bearer sk_test_1ae4fcb00d9fe5e4ac4bc7a3474ba883c836f0b2',
+            //'Authorization' :'Bearer sk_live_3e48c6f03ba238bd609d43f699e04c7d23473d4b',
         },
        
         form: {

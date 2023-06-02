@@ -212,7 +212,7 @@ export const sendToUserEmail = async (data) => {
 
         <h4>Transaction Successful</h3>
         <h4>Token: ${data.token}</h4>
-        <h4>Meter Number: ${data.meterNumber} </h4>
+        <h4>Meter Number: ${data.meter_number} </h4>
         <h4>Address:  </h4>
        
         <h4>Cost of Electricity: ₦ ${data.amount}</h4>
@@ -261,7 +261,7 @@ export const sendBorrowToken = async (data) => {
 
         <h4>Transaction Successful</h3>
         <h4>Token: ${data.token}</h4>
-        <h4>Meter Number: ${data.meterNumber} </h4>
+        <h4>Meter Number: ${data.meter_number} </h4>
         <h4>Address: ${data.address} </h4>
        
        
