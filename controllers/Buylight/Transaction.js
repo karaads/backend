@@ -34,7 +34,6 @@ export const saveTransaction = async (payload, req ) => {
         if(paymentmode === "wallet"){
             const newamount = parseInt(amount) + parseInt(servicecharge)
             const balance = parseInt(Key.balance) - newamount ;
-            console.log("here")
             Key.balance = balance;
             Key.save();
            await saveTransaction.save();
@@ -45,8 +44,8 @@ export const saveTransaction = async (payload, req ) => {
         }
 
         if(paymentmode === "vendor"){
-            console.log("workking fine")
-            const balance =  parseInt(Key.balance) - parseInt(amount) + parseInt(servicecharge);
+            const newamount = parseInt(amount) + parseInt(servicecharge)
+            const balance = parseInt(Key.balance) - newamount
             Key.balance = balance;
             const newclaims = parseInt(Key.claims) + parseInt(50)
             Key.claims = newclaims; 

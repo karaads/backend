@@ -6,7 +6,7 @@ export const InitializePayment = async (req, res) => {
     // initialize paystact payment
     const email = req.body.email;
     const amount = 5000;
-    const callback_url = 'https://borrowlite.com/';
+    const callback_url = 'https://borrowlite.com/detailspage';
   // const callback_url = 'http://localhost:3000/detailspage';
 
 
