@@ -18,7 +18,7 @@ const UserSchema = new Schema({
     createdAt: { type: Date, default: Date.now },
     balance: { type: Number, default: 0 },
     borrowedAmount: {type: Number, default: 0},
-    authCode: {type: String, default :'noAuthCode'},
+    authCode: {type: String},
     returningUser: { type: String},
     claims: {type: Number, default: 0},
     otp : {type: Number, default: 0},

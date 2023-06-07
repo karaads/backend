@@ -12,7 +12,7 @@ export const saveTransaction = async (payload, req ) => {
     const servicecharge =  payload.mdata.servicecharge
     const Saved = {...payload.mdata,  ...payload.data.data, id:user._id, firstName:user.firstName, amount, meter_name:payload.data.data.customer_name, address:payload.data.data.customer_address, paymentmode:paymentmode }
     const saveTransaction = new Transaction(Saved);
-    const interest = 100
+    const interest = parseInt(amount * 0.25)
     const newauthCode = payload.mdata.authCode
     
   
@@ -60,7 +60,7 @@ export const saveTransaction = async (payload, req ) => {
         
 //if transaction type is borrow update users borrowedAmount with amount + service charge
         if(paymentmode === "borrow"){
-            const newborrowedAmount = parseInt(Key.borrowedAmount) + parseInt(amount) + parseInt(servicecharge) + parseInt(interest);
+            const newborrowedAmount =  parseInt(amount) + parseInt(servicecharge) + parseInt(interest);
             Key.borrowedAmount = newborrowedAmount;
             Key.authCode =  newauthCode
             Key.save();
