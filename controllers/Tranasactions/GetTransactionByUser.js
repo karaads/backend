@@ -4,16 +4,21 @@ import Transaction from "../../models/Transaction.js";
 
 //get transaction by user api key
 export const getTransactionByUser = async (req, res) => {
-    const { apiKey } = req.body;
+    const user = req.user
+   
     try {
-        const Key = await User.findOne({ apiKey });
-        if (!Key || Key.apiKey !== apiKey || Key.apiKey === undefined) {
-            const result = await res.status(200).send({ error: "Invalid API Key, Access Denied" });
-            return result
+        const _id = user._id;
+       const Key = await User.findOne({_id : _id });
+        if(!Key){
+            return console.log("not found")
         }
-        const transaction = await Transaction.find({ apiKey });
+    
+        const id = Key.id
+        const transaction = await Transaction.find({id}).sort( { _id: -1 } );
         const data = transaction
-        console.log("here",data)
+       
+    
+
         res.status(200).send({ msg: "Transaction retrieved successfully", data });
     } catch (error) {
         console.log("there was an  error", error);
