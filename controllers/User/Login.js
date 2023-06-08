@@ -5,12 +5,15 @@ import { PasswordCorrect } from "../../utils/Index.js";
 import pkg from 'jsonwebtoken';
 
 export const Login = async (req, res) => {
-  console.log("good")
+  
     const jwt  = pkg;
-    const { phoneNumber, password} = req.body;
+    const { phoneNumber, password, email} = req.body;
     try {
         //check if user with phoneNumber already exists
-        const userExists = await User.findOne({phoneNumber});
+        const userExists = await User.findOne({$or: [
+            {email: phoneNumber},
+            {phoneNumber: phoneNumber}
+        ]});
         if (!userExists) {
             return res.status(404).send({ msg: "User does not exist" });
         }

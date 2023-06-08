@@ -16,7 +16,7 @@ export const Signup = async (req, res) => {
         const userExists = await User.findOne({ phoneNumber });
         if (userExists) {
             console.log(userExists)
-            return res.status(401).send({ msg: "User already exist" });
+            return res.status(409).send({ msg: "User already exist" });
         }
         //save user to database
         await user.save();
