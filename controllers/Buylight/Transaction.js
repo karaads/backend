@@ -47,7 +47,7 @@ export const saveTransaction = async (payload, req ) => {
             const newamount = parseInt(amount) + parseInt(servicecharge)
             const balance = parseInt(Key.balance) - newamount
             Key.balance = balance;
-            const newclaims = parseInt(Key.claims) + parseInt(50)
+            const newclaims = parseInt(Key.claims) + parseInt(70)
             Key.claims = newclaims; 
             Key.save();
            await saveTransaction.save();
