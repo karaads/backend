@@ -29,7 +29,7 @@ router.post("/api/v2/signup", Signup);
 router.post("/api/v2/login", Login);
 
 // send otp
-router.post("/api/v2//sendOtp", SendOtp);
+router.post("/api/v2/sendOtp", SendOtp);
 
 // verify otp
 router.post("/api/v2/verifyOtp", VerifyOtp);
