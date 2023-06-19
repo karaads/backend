@@ -24,7 +24,7 @@ export const Index = async (req, res) => {
 
         
         //get all user borrowed 
-        const borrowedUsers = allUsers.filter(item => item.borrowedAmount > 0).map(item =>  (item))
+        const borrowedUsers = allUsers.filter(item => item.borrowedAmount > 0).map(item =>  (item));
 
         //number of active borrowers
         const numberOfActiveBorrowers = borrowedUsers.length
