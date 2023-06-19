@@ -22,6 +22,7 @@ const UserSchema = new Schema({
     returningUser: { type: String},
     claims: {type: Number, default: 0},
     otp : {type: Number, default: 0},
+    role : {type: String}
 })
 
 // Create Model
