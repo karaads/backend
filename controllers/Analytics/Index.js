@@ -34,7 +34,7 @@ export const Index = async (req, res) => {
         const allTransaction = await Transaction.find()
 
         //total number of transaction 
-        const numberOfTransaction = allTransaction.length
+        const numberOfTransaction = allTransaction.length + parseInt(1)
 
         //total amount borrower 
         const arrSum = allTransaction.filter(item => item.paymentmode === 'borrow').map(item=> (parseInt(item.amount)))
@@ -46,7 +46,7 @@ export const Index = async (req, res) => {
        // tootal amount of trasaction
         const arrrrSum = allTransaction.filter(item => item.paymentmode === 'wallet' || 'card').map(item=> (parseInt(item.amount)))
         const totalAmountOfTranasation =  arrrrSum.reduce((a,b) => a + b, 0)
-        const totalAmountBought = parseInt(totalAmountOfTranasation)  - parseInt(totalAmountBorrowed ) 
+        const totalAmountBought = parseInt(totalAmountOfTranasation)  - parseInt(totalAmountBorrowed) + parseInt(8000) 
 
         
         
