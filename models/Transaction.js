@@ -23,7 +23,9 @@ const TransactionSchema = new Schema({
     interest: { type: String},
     id:{ type: String},
     paymentmode:{ type: String},
-    vendorCode: {type: String}
+    vendorCode: {type: String},
+    status: {type: String}
+
 })
 
 // Create Model

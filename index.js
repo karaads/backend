@@ -23,7 +23,7 @@ app.use(cors());
 // });
 
 //import routes
-import {userRoute, powerRoute, buyRoute, trxRoute, analyticsRoute} from './routes/index.js';
+import {userRoute, powerRoute, buyRoute, trxRoute, analyticsRoute, airtimeRoute} from './routes/index.js';
 
 //routes
 app.use('/users', userRoute);
@@ -31,6 +31,7 @@ app.use('/power', powerRoute);
 app.use('/buy', buyRoute )
 app.use('/trx', trxRoute )
 app.use('/analytics', analyticsRoute)
+app.use('/airtime', airtimeRoute)
 
 
 
