@@ -3,6 +3,7 @@ import nodemailer from "nodemailer";
 import User from "../models/User.js";
 import fetch from "node-fetch";
 import { api_key } from "../config/index.js";
+import Transaction from '../models/Transaction.js';
 
 //hash password
 export const hashPassword = async (password) => {
@@ -48,6 +49,7 @@ export const welcomeEmail = async (email, firstName) => {
          <b>What does this mean?</b><br>
          For us, we are delighted to be solving a very 
          important problem. One that has grossly<br> affected the most majority of Nigerians <br><br>
+import Transaction from '../models/Transaction';
 
          For you, it is definitely the time to bid that long night without electricity because you cant affort it 
           at the moment, goodbye. As you can<br> now borrow electricity for your prepaid meter right on our website, and 
@@ -76,6 +78,21 @@ export const welcomeEmail = async (email, firstName) => {
             console.log('Email sent: ' + info.response);
         }
     });
+}
+
+export const CreateTransaction = async (data) => {
+    const code =  Math.random().toString(36).substr(2, 6);
+    const payload = {
+        userId:data.id,
+        amount:data.amount,
+        transactionType:data.type,
+        description: data.description,
+        order_no: code
+    }
+    // save transaction 
+    const response  = new Transaction({...payload})
+    await response.save()
+    
 }
 
 
@@ -530,6 +547,10 @@ export const sendOtpSms = async (data) =>{
    
 
 }
+
+
+
+
 
 
 

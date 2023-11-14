@@ -7,10 +7,10 @@ import { Login } from "../controllers/User/Login.js";
 // import {getTransactionByUser} from "../controllers/User/GetTransactionByUser.js";
 // import {InitializePayment} from "../controllers/User/InitializePayment.js";
 // import {Checkref} from "../controllers/User/Checkref.js";
-// import {paybackAmount} from "../controllers/User/Payback.js";
+
 // import {getAllUsers} from "../controllers/User/GetAllUsers.js";
 // import {getAllTransactions} from "../controllers/User/GetAllTransactions.js";
-// import {GetUserById} from "../controllers/User/GetUserById.js";
+// import {GetUserById} from "..s/controllers/User/GetUserById.js";
 // import { BorrowCheckRef } from "../controllers/User/BorrowCheckRef.js";
 // import { UpdateUser } from "../controllers/User/UpdateUser.js";
 import { SendOtp } from "../controllers/User/SendOtp.js";
@@ -19,6 +19,9 @@ import { ResetPassword } from "../controllers/User/ResetPassword.js";
 import { ValidateToken } from "../middleware/ValidateToken.js";
 import { CurrentUser } from "../controllers/User.js";
 import { updateBalance } from "../controllers/User/UpdateBalance.js";
+//import {paybackAmount} from "../controllers/Tranasactions/Payback/paybackAmount.js";
+// import {paybackAmount} from '../controllers/Tranasactions/Payback'
+
 
 
 
@@ -36,7 +39,7 @@ router.post("/api/v2/verifyOtp", VerifyOtp);
 
 // reset password
 router.post("/api/v2/resetPassword", ResetPassword);
-router.get("/api/v2/currentUser", ValidateToken, CurrentUser)
+router.post("/api/v2/currentUser",  CurrentUser)
 router.post("/api/v2/updateBalance", ValidateToken, updateBalance)
 
 

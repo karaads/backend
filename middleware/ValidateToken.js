@@ -1,11 +1,15 @@
 import pkg from 'jsonwebtoken';
 
 export const ValidateToken = async (req, res, next)=>{
-    const jwt  = pkg;
+   
+    const jwt  =  pkg;
     let token  
     let authHeader = req.headers.Authorization || req.headers.authorization;
-    // console.log(authHeader)
+    console.log(authHeader)
+
     if(authHeader){
+        
+      
     if(authHeader && authHeader.startsWith('Bearer')){
         token = authHeader.split(' ')[1];
         jwt.verify(
@@ -18,7 +22,7 @@ export const ValidateToken = async (req, res, next)=>{
                 next()
             })
 
-            if(token == undefined || token == null){
+            if(token == undefined || token == null ){
                 return res.status(401).json({msg: 'User is not Authorized'})
             }
     }

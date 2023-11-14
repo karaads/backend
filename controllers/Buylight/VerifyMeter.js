@@ -2,8 +2,7 @@ import { api_key } from "../../config/index.js";
 
 
 export const VerifyMeter =  async(req, res)=>{
-
-  console.log(req.body)
+  console.log("working here",req.body)
   const meterNumber = req.body.meterNumber;
   const product_code = req.body.product_code;
   const task = "verify"
@@ -12,13 +11,12 @@ export const VerifyMeter =  async(req, res)=>{
  await fetch(url)
   .then(res => res.json())
   .then(data => { 
-    console.log(data)
+    console.log("all here",data)
    const result =  res.status(200).send({ data });
-
       return result 
   })
   .catch(err => {
-      res.status(401).send(err);
+      res.status(400).send(err);
   });
 } 
 

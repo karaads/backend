@@ -24,7 +24,14 @@ const TransactionSchema = new Schema({
     id:{ type: String},
     paymentmode:{ type: String},
     vendorCode: {type: String},
-    status: {type: String}
+    status: {type: String},
+    order_no: {type: String},
+    userId : {type: String},
+    description:{type: String},
+    date: {
+        type: Date, 
+        default: Date.now()
+    }
 
 })
 

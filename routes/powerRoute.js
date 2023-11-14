@@ -4,14 +4,28 @@ const router = express.Router();
 
 
 //verify meter number
-router.post('/verifyMeterNumber', (req, res) => {
-    const { meterNumber, apiKey, product_code, task} = req.body;
-    try {
-      verifyMeterNumber(meterNumber, apiKey, res, product_code, task);
-    } catch (error) {
-        console.log("there was an  error", error);
-        res.status(400).send(error);
+router.post('/verifyMeterNumber', async (req, res) => {
+
+  const response = await got.post("https://api.flutterwave.com/v3/bill-categories?power=1", {
+    headers: {
+        Authorization: `Bearer FLWSECK_TEST-3175c3ba2dbe32421117efa89716050f-X`
+    },
+    json: {
+        // Your payload
     }
+});
+
+console.log("here we go ",response)
+
+
+
+    // const { meterNumber, apiKey, product_code, task} = req.body;
+    // try {
+    //   verifyMeterNumber(meterNumber, apiKey, res, product_code, task);
+    // } catch (error) {
+    //     console.log("there was an  error", error);
+    //     res.status(400).send(error);
+    // }
   })
 
 router.post('/verifyRef', (req, res)=> {

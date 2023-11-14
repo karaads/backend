@@ -5,6 +5,7 @@ import { PasswordCorrect } from "../../utils/Index.js";
 import pkg from 'jsonwebtoken';
 
 export const Login = async (req, res) => {
+    console.log(req.body)
   
     const jwt  = pkg;
     const { phoneNumber, password, email} = req.body;
@@ -15,7 +16,7 @@ export const Login = async (req, res) => {
             {phoneNumber: phoneNumber}
         ]});
         if (!userExists) {
-            return res.status(404).send({ msg: "User does not exist" });
+            return res.status(200).send({ msg: "User does not exist" });
         }
         //check if password is correct
         const passwordCorrect = await PasswordCorrect(password, userExists);
@@ -29,11 +30,14 @@ export const Login = async (req, res) => {
             });
             return res.status(200).send({
                 msg: "Login Successful",
-                accessToken
+                accessToken,
+                data:user
             })
         }
         if (!passwordCorrect) {
-            return res.status(404).send({ msg: "Password is incorrect" });
+            console.log("here")
+
+            return res.status(200).send({ msg: "Password is incorrect" });
         }
     } catch (error) {
         res.status(400).send(error);

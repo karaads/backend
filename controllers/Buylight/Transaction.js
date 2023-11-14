@@ -50,14 +50,13 @@ export const saveTransaction = async (payload, req ) => {
             const newclaims = parseInt(Key.claims) + parseInt(70)
             Key.claims = newclaims; 
             Key.save();
-           await saveTransaction.save();
-           const data = saveTransaction
+            await saveTransaction.save();
+            const data = saveTransaction
            
             sendToUserEmail(data);
            // sendSms(data)
           // res.status(201).send({ msg: "Transaction saved successfully", data });
-        }
-        
+        }        
 //if transaction type is borrow update users borrowedAmount with amount + service charge
         if(paymentmode === "borrow"){
             const newborrowedAmount =  parseInt(amount) + parseInt(servicecharge) + parseInt(interest);
@@ -85,4 +84,8 @@ export const saveTransaction = async (payload, req ) => {
        // res.status(200).send(error);
     }
 }
+
+
+
+
 

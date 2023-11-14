@@ -3,7 +3,7 @@ import User from "../../models/User.js";
 
 //  update user balance with new amount
 export const updateBalance = async (req, res) => {
-    console.log("this is req.body", req.user);
+    console.log("this is req.body", req.body);
     const user = req.user
     const amount = req.body.amount
     const _id = user._id;

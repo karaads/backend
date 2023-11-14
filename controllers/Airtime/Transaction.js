@@ -15,9 +15,7 @@ export const saveTransaction = async (payload, req ) => {
     const interest = parseInt(amount * 0.25)
     const newauthCode = payload.mdata.authCode
     
-  
     try {
-
         console.log("thiis is payload",saveTransaction)
        const _id = user._id;
        const Key = await User.findOne({_id : _id });

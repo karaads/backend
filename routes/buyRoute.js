@@ -10,7 +10,7 @@ import { getTransactionByUser } from "../controllers/Tranasactions/GetTransactio
 
 const router = express.Router();
 
-router.post("/api/v2/verifymeter",ValidateToken, VerifyMeter);
+router.post("/api/v2/verifymeter", VerifyMeter);
 router.post("/api/v2/buyelectricity", ValidateToken, BuyElectricity)
 router.post("/api/v2/checkbuyref", ValidateToken, CheckBuyRef)
 router.post("/api/v2/savetransaction", ValidateToken, saveTransaction)

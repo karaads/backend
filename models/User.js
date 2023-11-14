@@ -2,6 +2,7 @@ import mongoose, { Schema, Document, Model } from 'mongoose';
 
 // Create Schema
 const UserSchema = new Schema({
+    fullname: { type: String},
     firstName: { type: String},
     lastName: { type: String },
     email: { type: String },
@@ -22,7 +23,8 @@ const UserSchema = new Schema({
     returningUser: { type: String},
     claims: {type: Number, default: 0},
     otp : {type: Number, default: 0},
-    role : {type: String}
+    role : {type: String},
+    referalCode: {type:String}
 })
 
 // Create Model
