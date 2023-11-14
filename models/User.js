@@ -24,6 +24,7 @@ const UserSchema = new Schema({
     claims: {type: Number, default: 0},
     otp : {type: Number, default: 0},
     role : {type: String},
+    pin : {type: String},
     referalCode: {type:String}
 })
 

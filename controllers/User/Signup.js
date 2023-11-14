@@ -7,11 +7,11 @@ import { hashPassword, welcomeEmail, CreateTransaction } from "../../utils/Index
 export const Signup = async (req, res) => {
    const code =  Math.random().toString(36).substr(2, 6);
   
-    const { firstName, lastName, email, address, city, state, zip, phoneNumber, dateOfBirth, userType, vendorCode, fullname } = req.body;
+    const { firstName, lastName, email, address, city, state, zip, phoneNumber, dateOfBirth, userType, vendorCode, fullname, pin } = req.body;
     //math.random
     const apiKey = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
     const password = await hashPassword(req.body.password);
-    const user = new User({fullname, firstName, lastName, email, password, address, city, state, zip, phoneNumber, dateOfBirth, apiKey, userType, vendorCode, referalCode:code});
+    const user = new User({pin, fullname, firstName, lastName, email, password, address, city, state, zip, phoneNumber, dateOfBirth, apiKey, userType, vendorCode, referalCode:code});
 
     try {
         //check if user with email already exists
@@ -45,7 +45,7 @@ export const Signup = async (req, res) => {
 
 
         //send welcome email
-        welcomeEmail(user.email, user.firstName);
+        // welcomeEmail(user.email, user.firstName);
         const data = user
         res.status(201).send({ 
             data,
