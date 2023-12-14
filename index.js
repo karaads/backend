@@ -36,7 +36,7 @@ app.use('/airtime', airtimeRoute)
 
 
 app.get('/', (req, res) => {
-  res.send('Welcome to Borrowlite Api!')
+  res.send('Welcome to Karaads!')
 })
 
 //connect to mongodb
