@@ -34,9 +34,9 @@ export const Signup = async (req, res) => {
             await User.updateMany({_id : refcode._id},{$set:{ balance : updateBalance}})
             const data = {
                 id:refcode._id,
-                amount: 100,
+                amount: 20,
                 type:"commission",
-                description:`Referral Bonus of 100 Naira`,
+                description:`Referral Bonus of 20 Naira`,
             }
           const addTransaction = CreateTransaction(data)
           addTransaction

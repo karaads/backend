@@ -2,6 +2,7 @@ import  express from "express";
 const router = express.Router();
 import { Signup } from "../controllers/User/Signup.js";
 import { Login } from "../controllers/User/Login.js";
+import { verifyBankAccount } from "../controllers/User/VerifyBankAccount.js"; 
 // import { updateBalance } from "../controllers/User/Fundwallet.js";
 // import {saveTransaction} from "../controllers/User/Transaction.js";
 // import {getTransactionByUser} from "../controllers/User/GetTransactionByUser.js";
@@ -19,6 +20,7 @@ import { ResetPassword } from "../controllers/User/ResetPassword.js";
 import { ValidateToken } from "../middleware/ValidateToken.js";
 import { CurrentUser } from "../controllers/User.js";
 import { updateBalance } from "../controllers/User/UpdateBalance.js";
+
 //import {paybackAmount} from "../controllers/Tranasactions/Payback/paybackAmount.js";
 // import {paybackAmount} from '../controllers/Tranasactions/Payback'
 
@@ -40,6 +42,7 @@ router.post("/api/v2/verifyOtp", VerifyOtp);
 // reset password
 router.post("/api/v2/resetPassword", ResetPassword);
 router.post("/api/v2/currentUser",  CurrentUser)
+router.post("/api/v2/verifyAccount",  verifyBankAccount)
 router.post("/api/v2/updateBalance", ValidateToken, updateBalance)
 
 
