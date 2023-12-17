@@ -19,9 +19,7 @@ export const Payearnings = async (req, res) => {
         id:req.body.id,
         amount: req.body.amount,
         type:req.body.type,
-        description:req.body.description,
-
-        
+        description:req.body.description,  
     }
 
     // const response  = new Transaction({...data})
