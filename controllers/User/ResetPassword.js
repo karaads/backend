@@ -17,9 +17,11 @@ export const ResetPassword = async (req, res) => {
             userExists[0].password = newPassword;
             userExists[0].otp = 0;
             await userExists[0].save();
-            res.status(200).send({ msg: "Password reset successfully" });
+            res.status(200).send({ msg: "Password reset successfully" ,  status: true});
+        //   res.status(200).json({ msg: "Password reset successfully", status:true });
         }else{
-            res.status(200).send({ msg: "there was an error reseting your password plaese try again" });
+            res.status(404).send({ msg: "there was an error reseting your password plaese try again", status: false });
+        //    res.status(404).json({ msg: "there was an error reseting your password plaese try again", status: false });
         }
     } catch (error) {
        res.status(500).send({ msg: "Internal server error" });

@@ -2,7 +2,7 @@ import  express from "express";
 const router = express.Router();
 import { Signup } from "../controllers/User/Signup.js";
 import { Login } from "../controllers/User/Login.js";
-import { verifyBankAccount } from "../controllers/User/VerifyBankAccount.js"; 
+import { verifyBankAccount, Banklist, addAcount, transferFunds } from "../controllers/User/VerifyBankAccount.js"; 
 // import { updateBalance } from "../controllers/User/Fundwallet.js";
 // import {saveTransaction} from "../controllers/User/Transaction.js";
 // import {getTransactionByUser} from "../controllers/User/GetTransactionByUser.js";
@@ -43,7 +43,10 @@ router.post("/api/v2/verifyOtp", VerifyOtp);
 router.post("/api/v2/resetPassword", ResetPassword);
 router.post("/api/v2/currentUser",  CurrentUser)
 router.post("/api/v2/verifyAccount",  verifyBankAccount)
+router.get("/api/v2/bankList",  Banklist)
 router.post("/api/v2/updateBalance", ValidateToken, updateBalance)
+router.post("/api/v2/addAccount", addAcount)
+router.post("/api/v2/transferFunds", transferFunds)
 
 
 

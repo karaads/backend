@@ -531,8 +531,8 @@ export const sendOtpSms = async (data) =>{
     const  number = data.phoneNumber;
     //number = number.substring(1);
    // const token = data.token;
-    const body = `Your Borrowlite password reset code is  ${data.otp}`;
-    const from = "Borrowlite";
+    const body = `Your Karaads password reset code is  ${data.otp}`;
+    const from = "Karaads";
     const api_token = "Nf1cjArMemxQjbu7O5uby6e8GPI4Gl4z9CoByBKzJJgRabb5d3VbQgAQCubU";
 
     var url = `https://www.bulksmsnigeria.com/api/v1/sms/create?api_token=${api_token}&from=${from}&to=${number}&body=${body}&dnd=2`;

@@ -25,7 +25,8 @@ const UserSchema = new Schema({
     otp : {type: Number, default: 0},
     role : {type: String},
     pin : {type: String},
-    referalCode: {type:String}
+    referalCode: {type:String},
+    accountDetails: {type: Array}
 })
 
 // Create Model

@@ -22,10 +22,10 @@ export const SendOtp = async (req, res) => {
 
             userExists[0].otp = otp;
             await userExists[0].save();
-            res.status(200).send({ msg: "Otp sent successfully" });
+            res.status(200).send({ msg: "Otp sent successfully", status: true });
 
         }else{
-            res.status(404).send({ msg: "User with phone number does not exist" });
+            res.status(404).send({ msg: "User with phone number does not exist", status: false  });
         }
     } catch (error) {
 
