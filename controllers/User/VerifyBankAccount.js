@@ -11,7 +11,7 @@ export const verifyBankAccount =  async( req, res)=>{
        uri: `https://api.paystack.co/bank/resolve?account_number=${req.body.account_number}&bank_code=${req.body.account_bank}`,
        method: 'GET',
        headers: {
-         Authorization: 'Bearer sk_test_ceb211950f0187dda44d5f1aadd5c08f66bd88c8'
+         Authorization: 'Bearer sk_live_26e6dbd93ed0f4296f768d677069f073fb285843'
        },
        
      }
@@ -32,7 +32,7 @@ export const verifyBankAccount =  async( req, res)=>{
       uri: 'https://api.paystack.co/bank?country=nigeria',
       method: 'GET',
       headers: {
-        Authorization: 'Bearer sk_test_ceb211950f0187dda44d5f1aadd5c08f66bd88c8'
+        Authorization: 'Bearer sk_live_26e6dbd93ed0f4296f768d677069f073fb285843'
       },
       
     }
@@ -57,7 +57,7 @@ export const verifyBankAccount =  async( req, res)=>{
      method: 'POST',
      headers: {
          'Content-Type': 'application/json',
-         'Authorization': 'Bearer sk_test_ceb211950f0187dda44d5f1aadd5c08f66bd88c8'
+         'Authorization': 'Bearer sk_live_26e6dbd93ed0f4296f768d677069f073fb285843'
      },
      body: JSON.stringify({
        "type": "nuban",
@@ -113,7 +113,7 @@ export const verifyBankAccount =  async( req, res)=>{
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer sk_test_ceb211950f0187dda44d5f1aadd5c08f66bd88c8'
+            'Authorization': 'Bearer sk_live_26e6dbd93ed0f4296f768d677069f073fb285843'
         },
         body: JSON.stringify({
           "source": "balance", 
