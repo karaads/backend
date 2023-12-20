@@ -13,6 +13,9 @@ export const Index = async (req, res) => {
         //total amount in users wallet
         const sumwalletbalance = allUsers.filter(item => item.balance).map(item => (parseInt(item.balance)))
         const  amountInUsersWallet =  sumwalletbalance.reduce((a,b) => a + b, 0)
+       // res.send(sumwalletbalance)
+
+       // console.log("amount in user wallet", sumwalletbalance)
 
         //all vendors 
         const allVendors = allUsers.filter(item => item.userType === 'vendor').map(item =>  (item))

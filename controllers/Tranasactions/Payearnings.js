@@ -4,11 +4,12 @@ import Transaction from "../../models/Transaction.js"
 
 export const Payearnings = async (req, res) => {
     console.log("my data here",req.body)
+    const amount = 1
 
     const findUser = await User.findOne({_id: req.body.id})
-    const findme = await User.findOne({_id: '657b0e905febac6a33e2c072'})
+   // const findme = await User.findOne({_id: '657b0e905febac6a33e2c072'})
     if(findUser){
-        const updateBalance = parseInt(findUser.balance ) + parseInt(req.body.amount)
+        const updateBalance = parseInt(findUser.balance ) + parseInt(amount)
         await User.updateMany({_id : findUser._id},{$set:{ balance : updateBalance}}) 
         const myBalance = parseInt(findme.balance ) + parseInt(1)
         await User.updateMany({_id : findme._id},{$set:{ balance : myBalance}})
@@ -17,7 +18,8 @@ export const Payearnings = async (req, res) => {
 
     const data = {
         id:req.body.id,
-        amount: req.body.amount,
+        // amount: req.body.amount,
+        amount,
         type:req.body.type,
         description:req.body.description,  
     }
