@@ -107,45 +107,44 @@ export const verifyBankAccount =  async( req, res)=>{
 
  export const transferFunds = async (req, res)=>{
   console.log("this is transfer",req.body)
-
-  const findUser = await User.findOne({apiKey: req.body.apiKey})
-  if(findUser){
-    let charge = (Number(req.body.amount)/100)*1.5
-    const updateBalance = parseInt(findUser.balance ) -  parseInt(req.body.actualAmount)
-    await User.updateMany({apiKey : findUser.apiKey},{$set:{ balance : updateBalance}}) 
-    res.send(data)
-}
   try{
-
-     fetch('https://api.paystack.co/transfer', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer sk_live_26e6dbd93ed0f4296f768d677069f073fb285843'
-        },
-        body: JSON.stringify({
-          "source": "balance", 
-          "reason": `${req.body.reason}`, 
-          "amount":req.body.amount*100, 
-          "recipient": `${req.body.recipient}`
-        })
-    })
-    .then(response => response.json())
-    .then(async (data) =>{
-      console.log(data.data.status)
-      if(data){
-        const findUser = await User.findOne({apiKey: req.body.apiKey})
-        if(findUser){
-          let charge = (Number(req.body.amount)/100)*1.5
-          const updateBalance = parseInt(findUser.balance ) -  parseInt(req.body.actualAmount)
-          await User.updateMany({apiKey : findUser.apiKey},{$set:{ balance : updateBalance}}) 
-          res.send(data)
-      }
-     }
+    const data = {
       
-    })
+        status:true,
+        message:"Transfer is Unavailable at the moment, we are working to bring this update to you soon  "
+      
+    }
+    res.send(data)
+
+    //  fetch('https://api.paystack.co/transfer', {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //         'Authorization': 'Bearer sk_live_26e6dbd93ed0f4296f768d677069f073fb285843'
+    //     },
+    //     body: JSON.stringify({
+    //       "source": "balance", 
+    //       "reason": `${req.body.reason}`, 
+    //       "amount":req.body.amount*100, 
+    //       "recipient": `${req.body.recipient}`
+    //     })
+    // })
+    // .then(response => response.json())
+    // .then(async (data) =>{
+    //   console.log(data.data.status)
+    //   if(data.data.status == 'success'){
+    //     const findUser = await User.findOne({apiKey: req.body.apiKey})
+    //     if(findUser){
+    //       let charge = (Number(req.body.amount)/100)*1.5
+    //       const updateBalance = parseInt(findUser.balance ) -  parseInt(req.body.actualAmount)
+    //       await User.updateMany({apiKey : findUser.apiKey},{$set:{ balance : updateBalance}}) 
+    //       res.send(data)
+    //   }
+    //   }
+      
+    // })
        
-    .catch(error => console.log('Error:', error));
+    // .catch(error => console.log('Error:', error));
     
 
 
