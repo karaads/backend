@@ -28,6 +28,8 @@ const TransactionSchema = new Schema({
     order_no: {type: String},
     userId : {type: String},
     description:{type: String},
+    paymentdata:{type: Array},
+    TxRef:{type:String},
     date: {
         type: Date, 
         default: Date.now()
