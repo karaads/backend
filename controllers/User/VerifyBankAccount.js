@@ -107,6 +107,14 @@ export const verifyBankAccount =  async( req, res)=>{
 
  export const transferFunds = async (req, res)=>{
   console.log("this is transfer",req.body)
+
+  const findUser = await User.findOne({apiKey: req.body.apiKey})
+  if(findUser){
+    let charge = (Number(req.body.amount)/100)*1.5
+    const updateBalance = parseInt(findUser.balance ) -  parseInt(req.body.actualAmount)
+    await User.updateMany({apiKey : findUser.apiKey},{$set:{ balance : updateBalance}}) 
+    res.send(data)
+}
   try{
 
      fetch('https://api.paystack.co/transfer', {
@@ -125,15 +133,15 @@ export const verifyBankAccount =  async( req, res)=>{
     .then(response => response.json())
     .then(async (data) =>{
       console.log(data.data.status)
-      if(data.data.status == 'success'){
-        const findUser = await User.findOne({apiKey: req.body.apiKey})
-        if(findUser){
-          let charge = (Number(req.body.amount)/100)*1.5
-          const updateBalance = parseInt(findUser.balance ) -  parseInt(req.body.actualAmount)
-          await User.updateMany({apiKey : findUser.apiKey},{$set:{ balance : updateBalance}}) 
-          res.send(data)
-      }
-      }
+      //if(data.data.status == 'success'){
+      //   const findUser = await User.findOne({apiKey: req.body.apiKey})
+      //   if(findUser){
+      //     let charge = (Number(req.body.amount)/100)*1.5
+      //     const updateBalance = parseInt(findUser.balance ) -  parseInt(req.body.actualAmount)
+      //     await User.updateMany({apiKey : findUser.apiKey},{$set:{ balance : updateBalance}}) 
+      //     res.send(data)
+      // }
+     // }
       
     })
        
