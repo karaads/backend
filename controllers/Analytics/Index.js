@@ -13,7 +13,8 @@ export const Index = async (req, res) => {
         //total amount in users wallet
         const sumwalletbalance = allUsers.filter(item => item.balance).map(item => (parseInt(item.balance)))
         const  amountInUsersWallet =  sumwalletbalance.reduce((a,b) => a + b, 0)
-       // res.send(sumwalletbalance)
+        res.status(200).send({ msg: "Password reset successfully" , amountInUsersWallet});
+         
 
        // console.log("amount in user wallet", sumwalletbalance)
 
@@ -35,13 +36,18 @@ export const Index = async (req, res) => {
 
         //get all Transactions
         const allTransaction = await Transaction.find()
+        
+        
 
         //total number of transaction 
-        const numberOfTransaction = allTransaction.length + parseInt(1)
+        const numberOfTransaction = allTransaction.length
+        // console.log("here",numberOfTransaction.length)
+        // res.send(numberOfTransaction)
 
         //total amount borrower 
         const arrSum = allTransaction.filter(item => item.paymentmode === 'borrow').map(item=> (parseInt(item.amount)))
         const totalAmountBorrowed =  arrSum.reduce((a,b) => a + b, 0)
+
 
         //total amount bought
         //const arrrSum = allTransaction.filter(item => item.paymentmode === 'wallet' || 'card').map(item=> (parseInt(item.amount)))
