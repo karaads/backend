@@ -30,6 +30,7 @@ const TransactionSchema = new Schema({
     description:{type: String},
     paymentdata:{type: Array},
     TxRef:{type:String},
+    afterBalance:{type:String},
     date: {
         type: Date, 
         default: Date.now()

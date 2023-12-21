@@ -206,12 +206,40 @@ export const verifyBankAccount =  async( req, res)=>{
 
 
     if(data.status == true){
+      console.log("this is data",data)
       const findUser = await User.findOne({apiKey: req.body.apiKey})
       if(findUser){
         const transfercode = data.data.transfer_code
         let charge = (Number(req.body.amount)/100)*1.5 
         const updateBalance = parseInt(findUser.balance ) -  parseInt(req.body.actualAmount)
         await User.updateMany({apiKey : findUser.apiKey},{$set:{ balance : updateBalance}}) 
+        const code =  Math.random().toString(36).substr(2, 6);
+    const payload = {
+        userId:req.body.apiKey,
+        amount:req.body.actualAmount,
+        transactionType:"payout",
+        description: "Payment from karaads",
+        order_no: code,
+        afterBalance:updateBalance
+    }
+    // save transaction 
+    const response  = new Transaction({...payload})
+    await response.save()
+
+      //   const ddata = {
+      //     id:req.body.id,
+      //     amount: req.body.amount,
+      //     //amount,
+      //     type:"payout",
+      //     description:"payout",
+          
+
+      // }
+
+      // const addTransaction = await CreateTransaction(ddata)
+      //  addTransaction
+      
+
         // res.send(data, d)
         const mdata = {
           status:true,
