@@ -13,7 +13,10 @@ export const Index = async (req, res) => {
         //total amount in users wallet
         const sumwalletbalance = allUsers.filter(item => item.balance).map(item => (parseInt(item.balance)))
         const  amountInUsersWallet =  sumwalletbalance.reduce((a,b) => a + b, 0)
-        res.status(200).send({ msg: "Password reset successfully" , amountInUsersWallet});
+        // res.status(200).send({ msg: "Password reset successfully" , amountInUsersWallet});
+
+        // const findme = await User.findOne({_id: '657b0e905febac6a33e2c072'})
+        // res.status(200).send({ msg: "Password reset successfully" , findme});
          
 
        // console.log("amount in user wallet", sumwalletbalance)
