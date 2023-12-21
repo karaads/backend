@@ -112,7 +112,9 @@ export const verifyBankAccount =  async( req, res)=>{
  export const transferFunds = async (req, res)=>{
   console.log("this is transfer",req.body)
   const apiKey = req.body.apiKey
-  try{
+  const findUser = await User.findOne({apiKey: req.body.apiKey})
+  if(findUser.balance >= 0 && findUser.balance > req.body.actualAmount){
+    try{
     // const data = {
       
     //     status:true,
@@ -141,21 +143,7 @@ export const verifyBankAccount =  async( req, res)=>{
       // console.log("this is my ddatt",data.data.reference)
       const reference = data.data.reference
 
-      verifyTransfer({reference, apiKey, req, res})
-
-
-
-
-      // if(data.data.status == 'success'){
-      //   const findUser = await User.findOne({apiKey: req.body.apiKey})
-      //   if(findUser){
-      //     let charge = (Number(req.body.amount)/100)*1.5
-      //     const updateBalance = parseInt(findUser.balance ) -  parseInt(req.body.actualAmount)
-      //     await User.updateMany({apiKey : findUser.apiKey},{$set:{ balance : updateBalance}}) 
-      //     res.send(data)
-      // }
-      // }
-      
+      verifyTransfer({reference, apiKey, req, res})      
     })   
     .catch(error => {
       const data = {
@@ -175,6 +163,68 @@ export const verifyBankAccount =  async( req, res)=>{
   }
   res.send(data)
   }
+
+
+  }else{
+      const data = {
+      status:true,
+      message:"Your balance is too low for this transaction"
+  }
+ return res.send(data)
+
+  }
+
+
+
+  // try{
+  //   // const data = {
+      
+  //   //     status:true,
+  //   //     message:"Transfer is Unavailable at the moment, we are working to bring this update to you soon  "
+      
+  //   // }
+  //   // res.send(data)
+  //   //sk_test_ceb211950f0187dda44d5f1aadd5c08f66bd88c8
+  //   //sk_live_26e6dbd93ed0f4296f768d677069f073fb285843
+
+  //    fetch('https://api.paystack.co/transfer', {
+  //       method: 'POST',
+  //       headers: {
+  //           'Content-Type': 'application/json',
+  //           'Authorization': 'Bearer sk_live_26e6dbd93ed0f4296f768d677069f073fb285843'
+  //       },
+  //       body: JSON.stringify({
+  //         "source": "balance", 
+  //         "reason": `${req.body.reason}`, 
+  //         "amount":req.body.amount*100, 
+  //         "recipient": `${req.body.recipient}`
+  //       })
+  //   })
+  //   .then(response => response.json())
+  //   .then(async (data) =>{
+  //     // console.log("this is my ddatt",data.data.reference)
+  //     const reference = data.data.reference
+
+  //     verifyTransfer({reference, apiKey, req, res})      
+  //   })   
+  //   .catch(error => {
+  //     const data = {
+  //       status:true,
+  //       message:"Transfer was not successful, try again later"
+  //   }
+  //   res.send(data)
+  //   });
+    
+
+
+
+  // }catch(error){
+  //   const data = {
+  //     status:true,
+  //     message:"Transfer was not successful, try again later"
+  // }
+  // res.send(data)
+  // }
 
   
   
