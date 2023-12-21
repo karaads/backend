@@ -113,7 +113,7 @@ export const verifyBankAccount =  async( req, res)=>{
   console.log("this is transfer",req.body)
   const apiKey = req.body.apiKey
   const findUser = await User.findOne({apiKey: req.body.apiKey})
-  if(findUser.balance >= 0 && findUser.balance > req.body.actualAmount){
+  if(findUser.balance >= 0 && findUser.balance > req.body.actualAmount ){
     try{
     // const data = {
       
@@ -166,11 +166,15 @@ export const verifyBankAccount =  async( req, res)=>{
 
 
   }else{
+    if(findUser.balance < req.body.actualAmount){
       const data = {
-      status:true,
-      message:"Your balance is too low for this transaction"
-  }
- return res.send(data)
+        status:true,
+        message:"Your balance is too low for this transaction"
+    }
+   return res.send(data)
+
+    }
+     
 
   }
 
