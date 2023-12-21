@@ -31,6 +31,8 @@ const TransactionSchema = new Schema({
     paymentdata:{type: Array},
     TxRef:{type:String},
     afterBalance:{type:String},
+    recipient_code:{type:String},
+    accountname:{type:String},
     date: {
         type: Date, 
         default: Date.now()

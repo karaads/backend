@@ -220,7 +220,12 @@ export const verifyBankAccount =  async( req, res)=>{
         transactionType:"payout",
         description: "Payment from karaads",
         order_no: code,
-        afterBalance:updateBalance
+        afterBalance:updateBalance,
+        TxRef:data.data.transfer_code,
+        accountname:data.data.recipient.name,
+        recipient_code:data.data.recipient.recipient_code
+
+
     }
     // save transaction 
     const response  = new Transaction({...payload})
