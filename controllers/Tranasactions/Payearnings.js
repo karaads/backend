@@ -16,7 +16,7 @@ export const Payearnings = async (req, res) => {
     if(findUser){
         const updateBalance = parseInt(findUser.balance ) + parseInt(amount)
         await User.updateMany({_id : findUser._id},{$set:{ balance : updateBalance}}) 
-        const myBalance = parseInt(findme.balance ) + parseInt(0.5)
+        const myBalance = parseInt(findme.balance ) + parseInt(1)
         console.log("this is my balance",myBalance)
         await User.updateMany({_id : findme._id},{$set:{ balance : myBalance}})
     }
