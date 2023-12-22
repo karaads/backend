@@ -30,13 +30,14 @@ export const Signup = async (req, res) => {
         //save user to database
         await user.save();
         if(refcode){
-            const updateBalance = parseInt(refcode.balance ) + parseInt(1)
+            const updateBalance = parseInt(refcode.balance ) + parseInt(20)
             await User.updateMany({_id : refcode._id},{$set:{ balance : updateBalance}})
             const data = {
                 id:refcode._id,
                 amount: 20,
                 type:"commission",
                 description:`Referral Bonus of 20 Naira`,
+                
             }
           const addTransaction = CreateTransaction(data)
           addTransaction
