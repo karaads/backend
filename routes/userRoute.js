@@ -51,6 +51,8 @@ router.post("/api/v2/transferFunds", transferFunds)
 router.post("/api/v2/updateVersion", UpdateVersion)
 router.get("/api/v2/getVersion", getVersion)
 router.post("/api/v2/updatelimit", updatelimit)
+router.post("/api/v2/transfer", verifyTransfer)
+
 
 
 
