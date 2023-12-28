@@ -4,7 +4,7 @@ import Transaction from "../../models/Transaction.js"
 
 export const Payearnings = async (req, res) => {
     console.log("my data here",req.body)
-    const amount = 5
+    const amount = 2
 
     const findUser = await User.findOne({_id: req.body.id})
 //    const findme = await User.findOne({apiKey: '9ug81s8ydojyq75pwgewd'})
