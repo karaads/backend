@@ -89,7 +89,7 @@ export const verifyBankAccount =  async( req, res)=>{
  export const transferFunds = async (req, res)=>{
   const data = {
           status:true,
-          message:"Transfer is Unavailable at the moment, we are working to bring this update to you soon"
+          message:"Transfer is Unavailable at the moment, we are working hard to bring this update to you soon"
         
       }
       res.send(data)
