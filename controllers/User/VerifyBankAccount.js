@@ -99,6 +99,7 @@ export const verifyBankAccount =  async( req, res)=>{
 
 
  export  const verifyTransfer = async (req, res)=>{
+  const Ref = Math.random().toString(36).substr(2, 11);
   const apiKey = req.body.apiKey
   const findUser = await User.findOne({apiKey: req.body.apiKey})
 
@@ -131,20 +132,20 @@ export const verifyBankAccount =  async( req, res)=>{
       actualAmount: req.body.actualAmount
     }
 
-    // let urlcode
-    // if(!accoountdata.bankName == 'Providus Bank'){
-    //   urlcode = `https://app.kwatibank.com/api/v2/transfer_bank?bank_name=${payload.bank_name}&bank_code=${payload.bank_code}&acc=${payload.acc}&desc=${payload.desc}&pin=${payload.pin}&from=9625761482&amount=${payload.amount}`
-    //   // console.log("for providus here")
-    //   // urlcode = `https://app.kwatibank.com/api/v2/transfer_sbank?from=9625761482&to=${payload.acc}&amount=${payload.actualAmount}&desc=${payload.desc}&pin=${payload.pin}`
-    // }else{
-    //   console.log("for noon providus")
-    //   urlcode = `https://app.kwatibank.com/api/v2/transfer_bank?bank_name=${payload.bank_name}&bank_code=${payload.bank_code}&acc=${payload.acc}&desc=${payload.desc}&pin=${payload.pin}&from=9625761482&amount=${payload.amount}`
-    // }
-    const Ref = Math.random().toString(36).substr(2, 11);
+    let urlcode
+    if(accoountdata.bankName == 'Providus Bank'){
+     // urlcode = `https://app.kwatibank.com/api/v2/transfer_bank?bank_name=${payload.bank_name}&bank_code=${payload.bank_code}&acc=${payload.acc}&desc=${payload.desc}&pin=${payload.pin}&from=9625761482&amount=${payload.amount}`
+      console.log("for providus here")
+      urlcode = `https://app.kwatibank.com/api/v2/transfer_sbank?from=9625761482&to=${payload.acc}&amount=${payload.actualAmount}&desc=${payload.desc}&pin=${payload.pin}&ref=${Ref}`
+    }else{
+      console.log("for noon providus")
+      urlcode = `https://app.kwatibank.com/api/v2/transfer_bank?bank_name=${payload.bank_name}&bank_code=${payload.bank_code}&acc=${payload.acc}&desc=${payload.desc}&pin=${payload.pin}&from=9625761482&amount=${payload.amount}&ref=${Ref}`
+    }
+   
     
   var options = {
     method: 'POST',
-    url: `https://app.kwatibank.com/api/v2/transfer_bank?bank_name=${payload.bank_name}&bank_code=${payload.bank_code}&acc=${payload.acc}&desc=${payload.desc}&pin=${payload.pin}&from=9625761482&amount=${payload.amount}&ref_id=${Ref}`,
+    url: urlcode,
     headers: {
       Accept: 'application/json',
       Authorization: 'Bearer lrJ5RFP0aJ59dTCkV6ZqtjnXJViJqWwhsc3rTyeID6h2gTxqjVRveCQ2uAkP',
@@ -173,15 +174,20 @@ export const verifyBankAccount =  async( req, res)=>{
         if(response){
 
           request(coptions, async function  (error, response) {
-            if (error) throw new Error(error);
+            // if (error) throw new Error(error);
+            if(error){
+
+          const data = {
+            status:true,
+            message:error
+            }
+             res.send(data)
+
+            }
             console.log("transaction state",response.body)
+            var cresult = JSON.parse(response.body)
 
-          })
-
-        }
-
-        
-        if(result.success == 'Transfer Completed'){
+             if(cresult.message == 'successful'){
           const updateBalance = parseInt(findUser.balance ) -  parseInt(req.body.actualAmount)
           await User.updateMany({apiKey : findUser.apiKey},{$set:{ balance : updateBalance, limit : true, timelimit: Date.now()}}) 
 
@@ -194,7 +200,7 @@ export const verifyBankAccount =  async( req, res)=>{
             description: "Payment from karaads",
             order_no: code,
             afterBalance:updateBalance,
-            TxRef:TxRef,
+            TxRef:Ref,
             accountname:accoountdata.accountName,
             
         }
@@ -204,7 +210,7 @@ export const verifyBankAccount =  async( req, res)=>{
 
           const data = {
                 status:true,
-                message:result.success
+                message:`your transfer was successful, your transaction reference is, ${Ref} `
             }
             res.send(data)
     
@@ -229,11 +235,18 @@ export const verifyBankAccount =  async( req, res)=>{
 
           const data = {
                 status:true,
-                message:result.success
+                message:`there was an error with your transaction, please contact admin with your transaction reference ${Ref} `
             }
             res.send(data)
 
         }
+
+          })
+
+        }
+
+        
+       
         
     
       });
