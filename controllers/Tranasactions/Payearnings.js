@@ -7,7 +7,7 @@ export const Payearnings = async (req, res) => {
     const amount = 5
 
     const findUser = await User.findOne({_id: req.body.id})
-   const findme = await User.findOne({apiKey: '9ug81s8ydojyq75pwgewd'})
+//    const findme = await User.findOne({apiKey: '9ug81s8ydojyq75pwgewd'})
 
    if(findme){
     console.log("user found")
@@ -18,7 +18,7 @@ export const Payearnings = async (req, res) => {
         await User.updateMany({_id : findUser._id},{$set:{ balance : updateBalance}}) 
         const myBalance = parseInt(findme.balance ) + parseInt(1)
         console.log("this is my balance",myBalance)
-        await User.updateMany({_id : findme._id},{$set:{ balance : myBalance}})
+        // await User.updateMany({_id : findme._id},{$set:{ balance : myBalance}})
     }
 
     const data = {

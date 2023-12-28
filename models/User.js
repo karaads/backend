@@ -26,7 +26,9 @@ const UserSchema = new Schema({
     role : {type: String},
     pin : {type: String},
     referalCode: {type:String},
-    accountDetails: {type: Array}
+    accountDetails: {type: Array},
+    limit: {type: String},
+    timelimit :{ type: Date, default: Date.now } 
 })
 
 // Create Model

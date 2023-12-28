@@ -8,7 +8,7 @@ export const getAllTransactions = async (req, res) => {
     try {
         const id = req.body.id
         // sort all transactions with id of id
-        const transaction = await Transaction.find({ userId: id }).sort({ date: -1 });
+        const transaction = await Transaction.find({ userId: id}).sort({ date: -1 });
         // const transaction = await Transaction.find({id}).sort( { id: -1 } );
          const data = transaction
        

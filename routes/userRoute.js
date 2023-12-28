@@ -2,7 +2,7 @@ import  express from "express";
 const router = express.Router();
 import { Signup } from "../controllers/User/Signup.js";
 import { Login } from "../controllers/User/Login.js";
-import { verifyBankAccount, Banklist, addAcount, transferFunds } from "../controllers/User/VerifyBankAccount.js"; 
+import { verifyBankAccount, Banklist, addAcount, transferFunds, updatelimit, verifyTransfer } from "../controllers/User/VerifyBankAccount.js"; 
 // import { updateBalance } from "../controllers/User/Fundwallet.js";
 // import {saveTransaction} from "../controllers/User/Transaction.js";
 // import {getTransactionByUser} from "../controllers/User/GetTransactionByUser.js";
@@ -20,6 +20,7 @@ import { ResetPassword } from "../controllers/User/ResetPassword.js";
 import { ValidateToken } from "../middleware/ValidateToken.js";
 import { CurrentUser } from "../controllers/User.js";
 import { updateBalance } from "../controllers/User/UpdateBalance.js";
+import { getVersion, UpdateVersion } from "../controllers/User/Settings.js";
 
 //import {paybackAmount} from "../controllers/Tranasactions/Payback/paybackAmount.js";
 // import {paybackAmount} from '../controllers/Tranasactions/Payback'
@@ -46,7 +47,12 @@ router.post("/api/v2/verifyAccount",  verifyBankAccount)
 router.get("/api/v2/bankList",  Banklist)
 router.post("/api/v2/updateBalance", ValidateToken, updateBalance)
 router.post("/api/v2/addAccount", addAcount)
-router.post("/api/v2/transferFunds", transferFunds)
+router.post("/api/v2/transferFunds", verifyTransfer)
+router.post("/api/v2/updateVersion", UpdateVersion)
+router.get("/api/v2/getVersion", getVersion)
+router.post("/api/v2/updatelimit", updatelimit)
+
+
 
 
 
