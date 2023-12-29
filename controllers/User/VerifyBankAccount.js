@@ -99,169 +99,181 @@ export const verifyBankAccount =  async( req, res)=>{
 
 
  export  const verifyTransfer = async (req, res)=>{
-  const Ref = Math.random().toString(36).substr(2, 11);
-  const apiKey = req.body.apiKey
-  const findUser = await User.findOne({apiKey: req.body.apiKey})
 
-  // check user balance 
-  if(parseInt(req.body.actualAmount)  > parseInt(findUser.balance)){
-    const data = {
-      status:true,
-      message:"insufficient funds"
-       }
-    return  res.send(data)
-    }
 
-    const accoountdata = findUser.accountDetails[0]
-    console.log("this is account data",accoountdata.bankName)
 
-    // Replace spaces with %20
-    function replaceSpaces(name) {
-    return name.replace(/ /g, '%20');
-    }
-    var bankname = replaceSpaces(accoountdata.bankName);
+ const data = {
+          status:true,
+          message:"There was a network error, please wait and try again later"
+        
+      }
+      res.send(data)
 
-    const payload = {
-      bank_name: bankname,
-      bank_code: accoountdata.bankCode,
-      acc: accoountdata.accountNumber,
-      desc: "Payment from karaads",
-      pin: '9780',
-      from: '9625761482',
-      amount : req.body.amount,
-      actualAmount: req.body.actualAmount
-    }
 
-    let urlcode
-    if(accoountdata.bankName == 'Providus Bank'){
-     // urlcode = `https://app.kwatibank.com/api/v2/transfer_bank?bank_name=${payload.bank_name}&bank_code=${payload.bank_code}&acc=${payload.acc}&desc=${payload.desc}&pin=${payload.pin}&from=9625761482&amount=${payload.amount}`
-      console.log("for providus here")
-      urlcode = `https://app.kwatibank.com/api/v2/transfer_sbank?from=9625761482&to=${payload.acc}&amount=${payload.actualAmount}&desc=${payload.desc}&pin=${payload.pin}&ref=${Ref}`
-    }else{
-      console.log("for noon providus")
-      urlcode = `https://app.kwatibank.com/api/v2/transfer_bank?bank_name=${payload.bank_name}&bank_code=${payload.bank_code}&acc=${payload.acc}&desc=${payload.desc}&pin=${payload.pin}&from=9625761482&amount=${payload.amount}&ref=${Ref}`
-    }
+
+  // const Ref = Math.random().toString(36).substr(2, 11);
+  // const apiKey = req.body.apiKey
+  // const findUser = await User.findOne({apiKey: req.body.apiKey})
+
+  // // check user balance 
+  // if(parseInt(req.body.actualAmount)  > parseInt(findUser.balance)){
+  //   const data = {
+  //     status:true,
+  //     message:"insufficient funds"
+  //      }
+  //   return  res.send(data)
+  //   }
+
+  //   const accoountdata = findUser.accountDetails[0]
+  //   console.log("this is account data",accoountdata.bankName)
+
+  //   // Replace spaces with %20
+  //   function replaceSpaces(name) {
+  //   return name.replace(/ /g, '%20');
+  //   }
+  //   var bankname = replaceSpaces(accoountdata.bankName);
+
+  //   const payload = {
+  //     bank_name: bankname,
+  //     bank_code: accoountdata.bankCode,
+  //     acc: accoountdata.accountNumber,
+  //     desc: "Payment from karaads",
+  //     pin: '9780',
+  //     from: '9625761482',
+  //     amount : req.body.amount,
+  //     actualAmount: req.body.actualAmount
+  //   }
+
+  //   let urlcode
+  //   if(accoountdata.bankName == 'Providus Bank'){
+  //    // urlcode = `https://app.kwatibank.com/api/v2/transfer_bank?bank_name=${payload.bank_name}&bank_code=${payload.bank_code}&acc=${payload.acc}&desc=${payload.desc}&pin=${payload.pin}&from=9625761482&amount=${payload.amount}`
+  //     console.log("for providus here")
+  //     urlcode = `https://app.kwatibank.com/api/v2/transfer_sbank?from=9625761482&to=${payload.acc}&amount=${payload.actualAmount}&desc=${payload.desc}&pin=${payload.pin}&ref=${Ref}`
+  //   }else{
+  //     console.log("for noon providus")
+  //     urlcode = `https://app.kwatibank.com/api/v2/transfer_bank?bank_name=${payload.bank_name}&bank_code=${payload.bank_code}&acc=${payload.acc}&desc=${payload.desc}&pin=${payload.pin}&from=9625761482&amount=${payload.amount}&ref=${Ref}`
+  //   }
    
     
-  var options = {
-    method: 'POST',
-    url: urlcode,
-    headers: {
-      Accept: 'application/json',
-      Authorization: 'Bearer lrJ5RFP0aJ59dTCkV6ZqtjnXJViJqWwhsc3rTyeID6h2gTxqjVRveCQ2uAkP',
-      Cookie: 'kwati_bank_session=fFkEG1YVoR1hittEOdCnm9EKDwFDnXxaittPfouC'
-    }
-  };
+  // var options = {
+  //   method: 'POST',
+  //   url: urlcode,
+  //   headers: {
+  //     Accept: 'application/json',
+  //     Authorization: 'Bearer lrJ5RFP0aJ59dTCkV6ZqtjnXJViJqWwhsc3rTyeID6h2gTxqjVRveCQ2uAkP',
+  //     Cookie: 'kwati_bank_session=fFkEG1YVoR1hittEOdCnm9EKDwFDnXxaittPfouC'
+  //   }
+  // };
 
-  var coptions = {
-    method: 'GET',
-    url: `https://app.kwatibank.com/api/v2/transaction_status/${Ref}`,
-    headers: {
-      Accept: 'application/json',
-      Authorization: 'Bearer lrJ5RFP0aJ59dTCkV6ZqtjnXJViJqWwhsc3rTyeID6h2gTxqjVRveCQ2uAkP',
-      Cookie: 'kwati_bank_session=fFkEG1YVoR1hittEOdCnm9EKDwFDnXxaittPfouC'
-    }
-  };
+  // var coptions = {
+  //   method: 'GET',
+  //   url: `https://app.kwatibank.com/api/v2/transaction_status/${Ref}`,
+  //   headers: {
+  //     Accept: 'application/json',
+  //     Authorization: 'Bearer lrJ5RFP0aJ59dTCkV6ZqtjnXJViJqWwhsc3rTyeID6h2gTxqjVRveCQ2uAkP',
+  //     Cookie: 'kwati_bank_session=fFkEG1YVoR1hittEOdCnm9EKDwFDnXxaittPfouC'
+  //   }
+  // };
 
-  async function fetchData() {
-    try{
-      request(options, async function  (error, response) {
-        if (error) throw new Error(error);
-        console.log(response.body)
-        var result = JSON.parse(response.body)
-        console.log("this is result",result);
-        console.log(result.success)
-        if(response){
+  // async function fetchData() {
+  //   try{
+  //     request(options, async function  (error, response) {
+  //       if (error) throw new Error(error);
+  //       console.log(response.body)
+  //       var result = JSON.parse(response.body)
+  //       console.log("this is result",result);
+  //       console.log(result.success)
+  //       if(response){
 
-          request(coptions, async function  (error, response) {
-            // if (error) throw new Error(error);
-            if(error){
+  //         request(coptions, async function  (error, response) {
+  //           // if (error) throw new Error(error);
+  //           if(error){
 
-          const data = {
-            status:true,
-            message:error
-            }
-             res.send(data)
+  //         const data = {
+  //           status:true,
+  //           message:error
+  //           }
+  //            res.send(data)
 
-            }
-            console.log("transaction state",response.body)
-            var cresult = JSON.parse(response.body)
+  //           }
+  //           console.log("transaction state",response.body)
+  //           var cresult = JSON.parse(response.body)
 
-             if(cresult.message == 'successful'){
-          const updateBalance = parseInt(findUser.balance ) -  parseInt(req.body.actualAmount)
-          await User.updateMany({apiKey : findUser.apiKey},{$set:{ balance : updateBalance, limit : true, timelimit: Date.now()}}) 
+  //            if(cresult.message == 'successful'){
+  //         const updateBalance = parseInt(findUser.balance ) -  parseInt(req.body.actualAmount)
+  //         await User.updateMany({apiKey : findUser.apiKey},{$set:{ balance : updateBalance, limit : true, timelimit: Date.now()}}) 
 
-          const code =  Math.random().toString(36).substr(2, 6);
-          const TxRef = Math.random().toString(36).substr(2, 10);
-          const payload = {
-            userId:req.body.apiKey,
-            amount:req.body.actualAmount,
-            transactionType:"payout",
-            description: "Payment from karaads",
-            order_no: code,
-            afterBalance:updateBalance,
-            TxRef:Ref,
-            accountname:accoountdata.accountName,
+  //         const code =  Math.random().toString(36).substr(2, 6);
+  //         const TxRef = Math.random().toString(36).substr(2, 10);
+  //         const payload = {
+  //           userId:req.body.apiKey,
+  //           amount:req.body.actualAmount,
+  //           transactionType:"payout",
+  //           description: "Payment from karaads",
+  //           order_no: code,
+  //           afterBalance:updateBalance,
+  //           TxRef:Ref,
+  //           accountname:accoountdata.accountName,
             
-        }
-        // save transaction 
-        const response  = new Transaction({...payload})
-        await response.save()
+  //       }
+  //       // save transaction 
+  //       const response  = new Transaction({...payload})
+  //       await response.save()
 
-          const data = {
-                status:true,
-                message:`your transfer was successful, your transaction reference is, ${Ref} `
-            }
-            res.send(data)
+  //         const data = {
+  //               status:true,
+  //               message:`your transfer was successful, your transaction reference is, ${Ref} `
+  //           }
+  //           res.send(data)
     
-        }else{
-          const updateBalance = parseInt(findUser.balance ) -  parseInt(req.body.actualAmount)
-          await User.updateMany({apiKey : findUser.apiKey},{$set:{ balance : updateBalance, limit : true, timelimit: Date.now()}}) 
-          const code =  Math.random().toString(36).substr(2, 6);
-          const TxRef = Math.random().toString(36).substr(2, 10);
-          const payload = {
-            userId:req.body.apiKey,
-            amount:req.body.actualAmount,
-            transactionType:"error",
-            description: "Payment from karaads",
-            order_no: code,
-            afterBalance:updateBalance,
-            TxRef:TxRef,
-            accountname:accoountdata.accountName,
+  //       }else{
+  //         const updateBalance = parseInt(findUser.balance ) -  parseInt(req.body.actualAmount)
+  //         await User.updateMany({apiKey : findUser.apiKey},{$set:{ balance : updateBalance, limit : true, timelimit: Date.now()}}) 
+  //         const code =  Math.random().toString(36).substr(2, 6);
+  //         const TxRef = Math.random().toString(36).substr(2, 10);
+  //         const payload = {
+  //           userId:req.body.apiKey,
+  //           amount:req.body.actualAmount,
+  //           transactionType:"error",
+  //           description: "Payment from karaads",
+  //           order_no: code,
+  //           afterBalance:updateBalance,
+  //           TxRef:TxRef,
+  //           accountname:accoountdata.accountName,
             
-        }
-        const response  = new Transaction({...payload})
-        await response.save()
+  //       }
+  //       const response  = new Transaction({...payload})
+  //       await response.save()
 
-          const data = {
-                status:true,
-                message:`there was an error with your transaction, please contact admin with your transaction reference ${Ref} `
-            }
-            res.send(data)
+  //         const data = {
+  //               status:true,
+  //               message:`there was an error with your transaction, please contact admin with your transaction reference ${Ref} `
+  //           }
+  //           res.send(data)
 
-        }
+  //       }
 
-          })
+  //         })
 
-        }
+  //       }
 
         
        
         
     
-      });
+  //     });
 
 
-    }catch(error){
-      const data = {
-        status:true,
-        message:error
-    }
-    res.send(data)
-    }
-  }
+  //   }catch(error){
+  //     const data = {
+  //       status:true,
+  //       message:error
+  //   }
+  //   res.send(data)
+  //   }
+  // }
 
-  fetchData()
+  //fetchData()
 
 
 

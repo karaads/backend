@@ -4,6 +4,14 @@ import Transaction from '../../models/Transaction.js';
 
 export const Index = async (req, res) => {
     try {
+
+           //get all Transactions
+           const allTransaction = await Transaction.find()
+        
+           //total number of transaction 
+           const numberOfTransaction = allTransaction.length
+           // console.log("here",numberOfTransaction.length)
+           // res.send(numberOfTransaction)
         //get all users
         const allUsers = await User.find();
 
@@ -13,8 +21,8 @@ export const Index = async (req, res) => {
         //total amount in users wallet
         const sumwalletbalance = allUsers.filter(item => item.balance).map(item => (parseInt(item.balance)))
         const  amountInUsersWallet =  sumwalletbalance.reduce((a,b) => a + b, 0)
-        console.log("Password reset successfully" , amountInUsersWallet)
-      // res.status(200).send({ msg: "Password reset successfully" , amountInUsersWallet});
+        console.log("successfully" , amountInUsersWallet)
+      res.status(200).send({ msg: "successful" , numberOfUsers});
 
         // const findme = await User.findOne({_id: '657b0e905febac6a33e2c072'})
         // res.status(200).send({ msg: "Password reset successfully" , findme});
@@ -35,15 +43,7 @@ export const Index = async (req, res) => {
         const numberOfActiveBorrowers = borrowedUsers.length
 
 
-        //get all Transactions
-        const allTransaction = await Transaction.find()
-        
-        
-
-        //total number of transaction 
-        const numberOfTransaction = allTransaction.length
-        // console.log("here",numberOfTransaction.length)
-        // res.send(numberOfTransaction)
+     
 
         //total amount borrower 
         const arrSum = allTransaction.filter(item => item.paymentmode === 'borrow').map(item=> (parseInt(item.amount)))
@@ -85,24 +85,28 @@ export const Index = async (req, res) => {
 
 
 
-        const data = {
-            allUsers,
-            numberOfUsers,
-            amountInUsersWallet,
-            borrowedUsers,
-            numberOfActiveBorrowers,
-            allTransaction,
-            numberOfTransaction,
-            totalAmountBorrowed,
-            allVendors,
-            numberOfVendors,
-            totalAmountBought,
-            totalAmountOfTranasation
-        }
+      //  const data = {
+            //allUsers,
+          //  numberOfUsers,
+           // amountInUsersWallet,
+            // borrowedUsers,
+            // numberOfActiveBorrowers,
+            // allTransaction,
+            // numberOfTransaction,
+            // totalAmountBorrowed,
+            // allVendors,
+            // numberOfVendors,
+            // totalAmountBought,
+            // totalAmountOfTranasation
+       // }
 
 
 
-        res.status(200).send(data);
+        //res.status(200).send("data");
+        // res.status(200).send({ data:{
+        //     "Number_of_user": allUsers,
+        //     "Amount_iin_user_wallet":amountInUsersWallet
+        // }});
     }
     catch (error) {
         res.status(404).send(error);
