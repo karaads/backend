@@ -1,114 +1,110 @@
 import express from 'express'
 import User from '../../models/User.js';
 import Transaction from '../../models/Transaction.js';
+import moment from 'moment'
 
 export const Index = async (req, res) => {
-    try {
 
-           //get all Transactions
-           const allTransaction = await Transaction.find()
-        
-           //total number of transaction 
-           const numberOfTransaction = allTransaction.length
-           // console.log("here",numberOfTransaction.length)
-           // res.send(numberOfTransaction)
-        //get all users
-        const allUsers = await User.find();
+    //total number of transactions
+    const totalTransactionCount = await Transaction.countDocuments();
+    // Serialize the array of documents to binary data
+    const serializedData = Buffer.from(JSON.stringify(totalTransactionCount), 'utf-8');
+    const NumberOfTransaction = JSON.parse(serializedData.toString('utf-8'));
+    
+    // number of payout transaction
+    const  NumberOfPayoutTransactions = await Transaction.countDocuments({ transactionType: 'payout' });
 
-        //number of users
-        const numberOfUsers = allUsers.length
+     // number of error transactioon
+    const  NumberOfErrorTransactions = await Transaction.countDocuments({ transactionType: 'error' });
 
-        //total amount in users wallet
-        const sumwalletbalance = allUsers.filter(item => item.balance).map(item => (parseInt(item.balance)))
-        const  amountInUsersWallet =  sumwalletbalance.reduce((a,b) => a + b, 0)
-        console.log("successfully" , amountInUsersWallet)
-      res.status(200).send({ msg: "successful" , numberOfUsers});
-
-        // const findme = await User.findOne({_id: '657b0e905febac6a33e2c072'})
-        // res.status(200).send({ msg: "Password reset successfully" , findme});
-         
-
-       // console.log("amount in user wallet", sumwalletbalance)
-
-        //all vendors 
-        const allVendors = allUsers.filter(item => item.userType === 'vendor').map(item =>  (item))
-
-        // number of vendoers
-        const numberOfVendors = allVendors.length
-
-        //get all user borrowed 
-        const borrowedUsers = allUsers.filter(item => item.borrowedAmount > 0).map(item =>  (item));
-
-        //number of active borrowers
-        const numberOfActiveBorrowers = borrowedUsers.length
+     // number of error transactioon
+     const  NumberOfEarningsTransactions = await Transaction.countDocuments({ transactionType: 'earnings' });
 
 
-     
-
-        //total amount borrower 
-        const arrSum = allTransaction.filter(item => item.paymentmode === 'borrow').map(item=> (parseInt(item.amount)))
-        const totalAmountBorrowed =  arrSum.reduce((a,b) => a + b, 0)
-
-
-        //total amount bought
-        //const arrrSum = allTransaction.filter(item => item.paymentmode === 'wallet' || 'card').map(item=> (parseInt(item.amount)))
-        
-       // tootal amount of trasaction
-        const arrrrSum = allTransaction.filter(item => item.paymentmode === 'wallet' || 'card').map(item=> (parseInt(item.amount)))
-        const totalAmountOfTranasation =  arrrrSum.reduce((a,b) => a + b, 0)
-        const totalAmountBought = parseInt(totalAmountOfTranasation)  - parseInt(totalAmountBorrowed) + parseInt(8000) 
-
-        
-        
-
-        //total amount bought
+   // Count the number of transactions where date is equal to day
+    const yesterday = moment().subtract(1, 'days').startOf('day').toISOString();
+    const  NumberOfPayoutTransactionBydays= await Transaction.countDocuments({
+      date: { $gte: new Date(yesterday), $lt: new Date() }, transactionType: 'payout'
+    });
 
 
+    // Use aggregation to find payout transactions within the date range
+    const result = await Transaction.aggregate([
+      {
+        $match: {
+          date: { $gte: new Date(yesterday), $lt: new Date() },
+          transactionType: 'payout'
+        }
+      },
+      {
+        $group: {
+          _id: null,
+          totalAmount: { $sum: { $toDouble: '$amount' } }
+        }
+      }
+    ]).exec();
+
+    // If there are results, access totalAmount from the first item
+    const totalPayoutAmountByDays = result.length > 0 ? result[0].totalAmount : 0;
 
 
+    const Eresult = await Transaction.aggregate([
+      {
+        $match: {
+          date: { $gte: new Date(yesterday), $lt: new Date() },
+          transactionType: 'error'
+        }
+      },
+      {
+        $addFields: {
+          amount: {
+            $toDouble: {
+              $replaceOne: {
+                input: '$amount',
+                find: ',',
+                replacement: '.'
+              }
+            }
+          }
+        }
+      },
+      {
+        $group: {
+          _id: null,
+          totalAmount: { $sum: '$amount' }
+        }
+      }
+    ]).exec();
 
-        // master wallet balance
-
-
-        //borrower with due date
-        
-
-
-
-
-
-
-
+    // If there are results, access totalAmount from the first item
+    const totalErrorPayoutAmountByDays = Eresult.length > 0 ? Eresult[0].totalAmount : 0;
 
 
 
+    const  ListofPayoutTransactionByDays= await Transaction.find({
+      date: { $gte: new Date(yesterday), $lt: new Date() }, transactionType: 'payout'
+    });
+
+    const  ListofErrorTransactionByDays= await Transaction.find({
+      date: { $gte: new Date(yesterday), $lt: new Date() }, transactionType: 'error'
+    });
 
 
+  
+  const data = {
+    "User List of transaction with error yesterday": ListofErrorTransactionByDays,
+    "User List of succesful transaction yesterday": ListofPayoutTransactionByDays,
+    "Life time, Total Number of Transsaction request for earnings, payout, and error": NumberOfTransaction,
+    "Total number of payout transaction": NumberOfPayoutTransactions,
+     "Number of transactions with error yesterday":NumberOfErrorTransactions,
+     "Number of succesful transaction yesterday":NumberOfPayoutTransactionBydays,
+    "Number of Earnings request": NumberOfEarningsTransactions,
+    "Total amount paid yesterday without error": totalPayoutAmountByDays,
+     "Total amount paid yesterday with error":totalErrorPayoutAmountByDays,
 
-      //  const data = {
-            //allUsers,
-          //  numberOfUsers,
-           // amountInUsersWallet,
-            // borrowedUsers,
-            // numberOfActiveBorrowers,
-            // allTransaction,
-            // numberOfTransaction,
-            // totalAmountBorrowed,
-            // allVendors,
-            // numberOfVendors,
-            // totalAmountBought,
-            // totalAmountOfTranasation
-       // }
+  
+  }
 
+  res.status(200).send({data})
 
-
-        //res.status(200).send("data");
-        // res.status(200).send({ data:{
-        //     "Number_of_user": allUsers,
-        //     "Amount_iin_user_wallet":amountInUsersWallet
-        // }});
-    }
-    catch (error) {
-        res.status(404).send(error);
-    }
 }
