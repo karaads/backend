@@ -33,6 +33,9 @@ const TransactionSchema = new Schema({
     afterBalance:{type:String},
     recipient_code:{type:String},
     accountname:{type:String},
+    bankname:{type:String},
+    accountNumber: {type:String},
+    banktype:{type:String},
     date: {
         type: Date, 
         default: Date.now()

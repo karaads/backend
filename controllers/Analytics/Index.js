@@ -14,6 +14,8 @@ export const Index = async (req, res) => {
     // number of payout transaction
     const  NumberOfPayoutTransactions = await Transaction.countDocuments({ transactionType: 'payout' });
 
+    
+
      // number of error transactioon
     const  NumberOfErrorTransactions = await Transaction.countDocuments({ transactionType: 'error' });
 
@@ -89,11 +91,21 @@ export const Index = async (req, res) => {
       date: { $gte: new Date(yesterday), $lt: new Date() }, transactionType: 'error'
     });
 
+    const  ListofFailedTransaction= await Transaction.find({
+      date: { $gte: new Date(yesterday), $lt: new Date() }, transactionType: 'failed'
+    });
+
+    const  ListofPendingTransaaction= await Transaction.find({
+      date: { $gte: new Date(yesterday), $lt: new Date() }, transactionType: 'pending'
+    });
+
 
   
   const data = {
     "User List of transaction with error yesterday": ListofErrorTransactionByDays,
     "User List of succesful transaction yesterday": ListofPayoutTransactionByDays,
+    "List of failed transaction": ListofFailedTransaction,
+    "List of pending transaction":  ListofPendingTransaaction,
     "Life time, Total Number of Transsaction request for earnings, payout, and error": NumberOfTransaction,
     "Total number of payout transaction": NumberOfPayoutTransactions,
      "Number of transactions with error yesterday":NumberOfErrorTransactions,
@@ -101,6 +113,7 @@ export const Index = async (req, res) => {
     "Number of Earnings request": NumberOfEarningsTransactions,
     "Total amount paid yesterday without error": totalPayoutAmountByDays,
      "Total amount paid yesterday with error":totalErrorPayoutAmountByDays,
+
 
   
   }
