@@ -10,6 +10,11 @@ export const Index = async (req, res) => {
     // Serialize the array of documents to binary data
     const serializedData = Buffer.from(JSON.stringify(totalTransactionCount), 'utf-8');
     const NumberOfTransaction = JSON.parse(serializedData.toString('utf-8'));
+
+    const NumberOfuserCount = await User.countDocuments();
+    // Serialize the array of documents to binary data
+    const serializedUser = Buffer.from(JSON.stringify(NumberOfuserCount), 'utf-8');
+    const NumberOfUser = JSON.parse(serializedUser.toString('utf-8'));
     
     // number of payout transaction
     const  NumberOfPayoutTransactions = await Transaction.countDocuments({ transactionType: 'payout' });
@@ -113,6 +118,7 @@ export const Index = async (req, res) => {
     "Number of Earnings request": NumberOfEarningsTransactions,
     "Total amount paid yesterday without error": totalPayoutAmountByDays,
      "Total amount paid yesterday with error":totalErrorPayoutAmountByDays,
+     "Number of Users":NumberOfUser
 
 
   
