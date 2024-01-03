@@ -135,7 +135,7 @@ request(aoptions, async function (error, response) {
   }
 
   var result = JSON.parse(response.body);
-  if (result[0].balance < 300000) {
+  if (result[0].balance <= 300000) {
     const data = {
       status: true,
       message: "Network is temporary Unavailable at the moment"
