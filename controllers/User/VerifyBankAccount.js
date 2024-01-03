@@ -204,7 +204,7 @@ const Ref = hash.slice(0, 30);
     return  res.send(data)
     }
      // // check user limit
-  if(findUser.limit == "false"){
+  if(findUser.limit == "true"){
     const data = {
       status:true,
       message:"you have reached your transfer limit for the day "
