@@ -1,13 +1,17 @@
 import express from 'express'
 import bodyParser from 'body-parser';
-import { MONGO_URL } from './config/index.js';
+
 import mongoose from 'mongoose';
 import cors from 'cors';
 import cron from 'node-cron'
 import User from './models/User.js';
 import Transaction from './models/Transaction.js';
 import request from 'request';
+import 'dotenv/config'
 const port = process.env.PORT || 5000;
+const  dbcconnet = process.env.MONGO_URL
+const TOKEN = process.env.TOKEN
+const BASEURL = process.env.BASEURL
 // const corsOptions ={
 //   origin: 'https://borrowlite.com/',
 //  //origin:'http://localhost:3000', 
@@ -44,7 +48,7 @@ app.get('/', (req, res) => {
 })
 
 //connect to mongodb
-mongoose.connect(MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(dbcconnet, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('Connected to MongoDB...'))
     .catch(err => console.error('Could not connect to MongoDB...', err));
 
@@ -81,10 +85,10 @@ async function updateTransactionType() {
       const ref = transaction.TxRef
       var coptions = {
         method: 'GET',
-        url: `https://app.kwatibank.com/api/v2/transaction_status/${ref}`,
+        url: `${BASEURL}/api/v2/transaction_status/${ref}`,
         headers: {
           Accept: 'application/json',
-          Authorization: 'Bearer lrJ5RFP0aJ59dTCkV6ZqtjnXJViJqWwhsc3rTyeID6h2gTxqjVRveCQ2uAkP',
+          Authorization: `Bearer ${TOKEN}`,
           Cookie: 'kwati_bank_session=fFkEG1YVoR1hittEOdCnm9EKDwFDnXxaittPfouC'
         }
       };
@@ -114,21 +118,39 @@ async function updateTransactionType() {
   }
 }
 
-// Call the function to update transactions
-// updateTransactionType();
-
-
-
-// retry()
-
-
-    // await Transaction.updateOne(
-      //   { _id: transaction._id },
-      //   { $set: { transactionType: 'pending' } }
-      // );
-      // console.log(`Transaction ${transaction._id} updated to 'check'`);
 
 
 
 
+
+async function updateUsers() {
+  try {
+    // Find all transactions with transactionType 'pending'
+    const userlimit = await User.find({ limit: 'true' });
+
+
+    
+
+
+    // Update transactionType to 'check' for each found transaction all get TxRef for each and pass them to thee ref paramater accoundinggly 
+    for (const transaction of userlimit) {
+          await User.updateOne(
+              { _id: transaction._id },
+              { $set: { limit: 'false' } }
+            );
+
+            console.log(`users ${transaction._id} updated to 'false'`);
+        
+    
+
+
+
+    
+    }
+
+    console.log('All limit true is set to false"');
+  } catch (error) {
+    console.error('Error updating transactions:', error.message);
+  }
+}
 
