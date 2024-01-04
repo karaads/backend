@@ -94,14 +94,14 @@ async function updateTransactionType() {
       };
       request(coptions, async function  (error, response) {
         var cresult = JSON.parse(response.body)
-        console.log("result here",cresult)
+        console.log("result here",cresult, ref)
          if(cresult.message == "successful"){
           await Transaction.updateOne(
               { _id: transaction._id },
               { $set: { transactionType: 'payout' } }
             );
 
-            console.log(`Transaction ${transaction._id} updated to 'payout'`);
+            console.log(`Transaction ${transaction._id} updated to 'payout' ${ref}`);
          }else{
 
          }
@@ -154,5 +154,6 @@ async function updateUsers() {
   }
 }
 
-updateUsers()
+//updateUsers()
+//updateTransactionType()
 

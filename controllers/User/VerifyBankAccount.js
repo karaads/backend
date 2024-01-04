@@ -129,8 +129,11 @@ export const verifyBankAccount =  async( req, res)=>{
   const minutes = timeleft;
   const result = convertMinutesToHours(minutes);
   console.log(timeleft)
+  console.log(differenceInHours)
+  
 
-  if(differenceInHours == 0){
+
+  if(differenceInHours >= 1440){
     console.log("all clear")
 
 
@@ -404,7 +407,7 @@ const Ref = hash.slice(0, 30);
   }else{
     const data = {
             status:true,
-            message:`you have reached your transfer limit for the day, you next transfer will be in ${result} `
+            message:`you have reached your transfer limit for the day`
              }
           return  res.send(data)
    // console.log("not good to go")
