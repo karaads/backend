@@ -128,8 +128,9 @@ export const verifyBankAccount =  async( req, res)=>{
   const timeleft = 1440 - differenceInHours 
   const minutes = timeleft;
   const result = convertMinutesToHours(minutes);
+  console.log(timeleft)
 
-  if(differenceInHours >= 1440){
+  if(differenceInHours == 0){
     console.log("all clear")
 
 
@@ -229,7 +230,7 @@ const Ref = hash.slice(0, 30);
  
               // save transaction
             const updateBalance = parseInt(findUser.balance ) -  parseInt(req.body.actualAmount)
-              await User.updateMany({apiKey : findUser.apiKey},{$set:{ balance : updateBalance, limit : true, timelimit: Date.now()}}) 
+              await User.updateMany({apiKey : findUser.apiKey},{$set:{ balance : updateBalance, timelimit: Date.now()}}) 
               const code =  Math.random().toString(36).substr(2, 6);
               const cpayload = {
                 userId:req.body.apiKey,
@@ -334,6 +335,7 @@ const Ref = hash.slice(0, 30);
             
                          if(cresult.message == 'successful'){
                           const findTransaction = await Transaction.findOne({TxRef:Ref})
+                          await User.updateMany({apiKey : findTransaction.userId},{$set:{timelimit: Date.now()}})
                           if(findTransaction){
                             await Transaction.updateMany({TxRef:Ref},{$set:{ transactionType:"payout", banktype: banktype}}) 
                             const data = {
