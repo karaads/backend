@@ -129,7 +129,7 @@ export const verifyBankAccount =  async( req, res)=>{
   const minutes = timeleft;
   const result = convertMinutesToHours(minutes);
 
-  if(differenceInHours >= 1440){
+  if(timeleft == 0){
     console.log("all clear")
 
 
