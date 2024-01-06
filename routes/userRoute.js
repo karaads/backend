@@ -1,6 +1,7 @@
 import  express from "express";
 const router = express.Router();
 import { Signup } from "../controllers/User/Signup.js";
+import { Register } from "../controllers/V3/Signup.js";
 import { Login } from "../controllers/User/Login.js";
 import { verifyBankAccount, Banklist, addAcount, transferFunds, updatelimit, verifyTransfer } from "../controllers/User/VerifyBankAccount.js"; 
 // import { updateBalance } from "../controllers/User/Fundwallet.js";
@@ -52,6 +53,12 @@ router.post("/api/v2/updateVersion", UpdateVersion)
 router.get("/api/v2/getVersion", getVersion)
 router.post("/api/v2/updatelimit", updatelimit)
 router.post("/api/v2/transfer", verifyTransfer)
+
+
+//API version 3 
+router.post("/api/v3/signup", Register);
+
+
 
 
 

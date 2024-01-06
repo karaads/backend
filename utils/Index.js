@@ -20,12 +20,12 @@ export const PasswordCorrect = async (password, userExists) => {
 //send welcome email
 export const welcomeEmail = async (email, firstName) => {
     const transporter = nodemailer.createTransport({
-        host: 'smtp.zoho.com',
-        port: 465,
+        host: 'privateemail.com',
+        port: 25,
         secure: true, // true for 465, false for other ports
         auth: {
-            user: 'welcome@borrowlite.com', // generated ethereal user
-            pass: 'Mayorgnn@088' // generated ethereal password
+            user: 'welcome@karaads.com', // generated ethereal user
+            pass: 'welcomekaraads' // generated ethereal password
         },
         tls:587
     });
