@@ -18,56 +18,94 @@ export const PasswordCorrect = async (password, userExists) => {
 }
 
 //send welcome email
-export const welcomeEmail = async (email, firstName) => {
+export const welcomeEmail = async (email, fullname) => {
     const transporter = nodemailer.createTransport({
-        host: 'privateemail.com',
-        port: 25,
+        host: 'mail.privateemail.com',
+        port: 465,
         secure: true, // true for 465, false for other ports
         auth: {
             user: 'welcome@karaads.com', // generated ethereal user
             pass: 'welcomekaraads' // generated ethereal password
         },
-        tls:587
+        tls: {
+            rejectUnauthorized: false
+        }
+      
+
+
     });
 
     const mailOptions = {
-        from: '<welcome@borrowlite.com>',
+        from: '<welcome@karaads.com>',
         to: email,
-        subject: 'Welcome to Borrowlite',
+        subject: 'Welcome to Karaads',
         html: `
-        Hello ${firstName},<br>
+        Hello ${fullname},<br>
 
-        My name is Wisdom Kwati, Founder of Borrowlite.
-         We’re very delighted to have you<br> join us and we look 
-         forward to a long lasting relationship.<br><br>
+        Welcome to KaraAds, your gateway to a whole new level of interactive and rewarding advertising experiences! 🚀.<br><br>
 
-         We created borrowlite  with one aim in mind: 
-         To create an additional layer of confort for you, 
-         by providing electricity Token to <br> you just when you need it the most. And we have 
-         been doing this successfully since 2020.<br><br>
+        We're delighted to welcome you to our growing community of users who are not just engaging with ads but also earning 
+        for their valuable screen time. Get ready to explore
+         the exciting features KaraAds has to offer, from immersive ad experiences to unlocking opportunities to earn rewards.<br><br>
 
-         <b>What does this mean?</b><br>
-         For us, we are delighted to be solving a very 
-         important problem. One that has grossly<br> affected the most majority of Nigerians <br><br>
-import Transaction from '../models/Transaction';
+         Feel free to navigate through our platform, watch ads, and discover the unique ways in which KaraAds is changing the game. If you ever have questions or
+          need assistance, our support team is here to guide you every step of the way.<br><br>
 
-         For you, it is definitely the time to bid that long night without electricity because you cant affort it 
-          at the moment, goodbye. As you can<br> now borrow electricity for your prepaid meter right on our website, and 
-         pay back later<br><br>
+          Your presence adds value to our community, and we can't wait to see the impact you'll make.
+           Welcome to KaraAds – where engagement meets rewards! 🌟<br><br>
 
          <b>What's more?</b><br>
 
          We have a 24-hour customer service policy [you all are our trophy]. So, I’m handing you<br> over to Susan.
           She’ll be your personal account officer. Feel free to contact us anytime <br>you feel like talking.<br><br>
 
-         <b>Email: help@borrowlite.com</b> <br>
-            <b>Phone: 08106119178</b><br>
+         <b>Email: karaads101@gmail.com</b> <br>
             Thank you, and welcome again.<br>
-            Follow us on social media: Instagram, Twitter and Facebook @borrowlite<br><br>
+            Follow us on social media: Instagram, Twitter and Facebook @officalkaraads<br><br>
 
             <b>Wisdom Kwati</b><br>
-            <b>Founder and CEO Borrowlite</b>
+            <b>Founder  Karaads</b>
         
+        `
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
+}
+
+export const EmailOtp = async (data) => {
+    const transporter = nodemailer.createTransport({
+        host: 'mail.privateemail.com',
+        port: 465,
+        secure: true, // true for 465, false for other ports
+        auth: {
+            user: 'verification@karaads.com', // generated ethereal user
+            pass: 'verificationkaraads' // generated ethereal password
+        },
+        tls: {
+            rejectUnauthorized: false
+        }
+      
+
+
+    });
+
+    const mailOptions = {
+        from: '<verification@karaads.com>',
+        to: data.email,
+        subject: 'Password rest',
+        html: `
+        Hello, you are about to reset your Karaads password, below is your OTP ${data.otp}<br><br>
+
+        
+         <b>Email: karaads101@gmail.com</b> <br>
+        Follow us on social media: Instagram, Twitter and Facebook @officalkaraads<br><br>
+
         `
     };
 

@@ -1,7 +1,14 @@
 import  express from "express";
 const router = express.Router();
 import { Signup } from "../controllers/User/Signup.js";
+// new route
 import { Register } from "../controllers/V3/Signup.js";
+import {SendMyOtp}  from "../controllers/V3/Auth/Otp.js";
+import { VerifyMyOtp } from "../controllers/V3/Auth/VerifyMyOtp.js";
+import { ResetMe } from "../controllers/V3/Auth/ResetMe.js";
+
+
+
 import { Login } from "../controllers/User/Login.js";
 import { verifyBankAccount, Banklist, addAcount, transferFunds, updatelimit, verifyTransfer } from "../controllers/User/VerifyBankAccount.js"; 
 // import { updateBalance } from "../controllers/User/Fundwallet.js";
@@ -57,6 +64,9 @@ router.post("/api/v2/transfer", verifyTransfer)
 
 //API version 3 
 router.post("/api/v3/signup", Register);
+router.post("/api/v3/sendOtp", SendMyOtp);
+router.post("/api/v3/verifyOtp",  VerifyMyOtp);
+router.post("/api/v3/resetPassword", ResetMe);
 
 
 

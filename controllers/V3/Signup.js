@@ -159,7 +159,7 @@ export const Register = async (req, res) => {
 
 
        // send welcome email
-        welcomeEmail(user.email, user.firstName);
+      await  welcomeEmail(user.email, user.fullname);
         // const data = user
         
 

@@ -111,279 +111,279 @@ export const verifyBankAccount =  async( req, res)=>{
 
  export  const verifyTransfer = async (req, res)=>{
 
-  const data = {
-    status:true,
-    message:"Transfer is Unavailable at the moment, please try again later"
+//   const data = {
+//     status:true,
+//     message:"Transfer is Unavailable at the moment, please try again later"
   
-}
-res.send(data)
+// }
+// res.send(data)
   
   
-//   const findUser = await User.findOne({apiKey: req.body.apiKey})
-//   const currentDate = new Date()
-//   const isoString = currentDate.toISOString()
-//   const date1 = moment(isoString);
-//   const date2 = moment(findUser?.timelimit);
-//   const differenceInHours = date1.diff(date2, 'minutes');
-//   console.log("diff is here",differenceInHours);
+  const findUser = await User.findOne({apiKey: req.body.apiKey})
+  const currentDate = new Date()
+  const isoString = currentDate.toISOString()
+  const date1 = moment(isoString);
+  const date2 = moment(findUser?.timelimit);
+  const differenceInHours = date1.diff(date2, 'minutes');
+  console.log("diff is here",differenceInHours);
   
-//   function convertMinutesToHours(minutes) {
-//     const duration = moment.duration(minutes, 'minutes');
-//     const hours = duration.hours();
-//     const minutesLeft = duration.minutes();
+  function convertMinutesToHours(minutes) {
+    const duration = moment.duration(minutes, 'minutes');
+    const hours = duration.hours();
+    const minutesLeft = duration.minutes();
   
-//     return `${hours} hours and ${minutesLeft} minutes`;
-//   }
+    return `${hours} hours and ${minutesLeft} minutes`;
+  }
   
-//   // Example usage:
-//   const timeleft = 1440 - differenceInHours 
-//   const minutes = timeleft;
-//   const result = convertMinutesToHours(minutes);
-//   console.log(timeleft)
-//   console.log(differenceInHours)
-  
-
-
-//   if(differenceInHours >= 1440){
-//     console.log("all clear")
-
-
-// var aoptions = {
-//   method: 'GET',
-//   url: `${BASEURL}/api/v2/accounts`,
-//   headers: {
-//     Accept: 'application/json',
-//     Authorization: `Bearer ${TOKEN}`,
-//    cookie :'kwati_bank_session=fFkEG1YVoR1hittEOdCnm9EKDwFDnXxaittPfouC'
-//   }
-// };
-
-// request(aoptions, async function (error, response) {
-//   if (error) {
-//     const data = {
-//       status: true,
-//       message: "There was a network error please try again later"
-//     }
-//     return res.send(data);
-//   }
-
-//   var result = JSON.parse(response.body);
-//   if (result[0].balance <= 300000) {
-//     const data = {
-//       status: true,
-//       message: "Network is temporary Unavailable at the moment"
-//     }
-//     return res.send(data);
-//   }
-
-
-//   const findUser = await User.findOne({apiKey: req.body.apiKey})
-  
- 
-//   const  accoountdata = findUser.accountDetails[0]
-//   let urlcode
-//   let banktype 
-//   if(accoountdata.bankName == 'Providus Bank'){
-//     banktype = "kwati"
-//   }else{
-//     banktype ="other"
-//   }
-
-
-
-//  // generate a ref
-
-
-//  const refme = {
-//    userId: findUser._id,
-//    name: findUser.fullname,
-//    apiKey: findUser.apiKey,
-//    amount: req.body.amount,
-//    accountName: accoountdata.accountName,
-//    bankName: accoountdata.bankName,
-//    accountNumber: accoountdata.accountNumber,
-//    date: new Date().getTime() // Add current time in milliseconds
-//  };
-//  const concatenatedString = `${refme.userId}${refme.name}${refme.apiKey}${refme.amount}${refme.accountName}${refme.bankName}${refme.accountNumber}${refme.date}`;
-//  const hash = crypto.createHash('sha256').update(concatenatedString).digest('hex');
-
-// // Take the first 30 characters of the hash
-// const Ref = hash.slice(0, 30);
-//    // // check user balance 
-//   if(parseInt(req.body.actualAmount)  > parseInt(findUser.balance)){
-//     const data = {
-//       status:true,
-//       message:"insufficient funds"
-//        }
-//     return  res.send(data)
-//     }
+  // Example usage:
+  const timeleft = 1440 - differenceInHours 
+  const minutes = timeleft;
+  const result = convertMinutesToHours(minutes);
+  console.log(timeleft)
+  console.log(differenceInHours)
   
 
 
+  if(differenceInHours > 1440){
+    console.log("all clear")
 
+
+var aoptions = {
+  method: 'GET',
+  url: `${BASEURL}/api/v2/accounts`,
+  headers: {
+    Accept: 'application/json',
+    Authorization: `Bearer ${TOKEN}`,
+   cookie :'kwati_bank_session=fFkEG1YVoR1hittEOdCnm9EKDwFDnXxaittPfouC'
+  }
+};
+
+request(aoptions, async function (error, response) {
+  if (error) {
+    const data = {
+      status: true,
+      message: "There was a network error please try again later"
+    }
+    return res.send(data);
+  }
+
+  var result = JSON.parse(response.body);
+  if (result[0].balance <= 300000) {
+    const data = {
+      status: true,
+      message: "Network is temporary Unavailable at the moment"
+    }
+    return res.send(data);
+  }
+
+
+  const findUser = await User.findOne({apiKey: req.body.apiKey})
   
  
-//               // save transaction
-//             const updateBalance = parseInt(findUser.balance ) -  parseInt(req.body.actualAmount)
-//               await User.updateMany({apiKey : findUser.apiKey},{$set:{ balance : updateBalance, timelimit: Date.now()}}) 
-//               const code =  Math.random().toString(36).substr(2, 6);
-//               const cpayload = {
-//                 userId:req.body.apiKey,
-//                 amount:req.body.actualAmount,
-//                 transactionType:"pending",
-//                 description: "Payment from karaads",
-//                 order_no: code,
-//                 afterBalance:updateBalance,
-//                 TxRef:Ref,
-//                 accountname:accoountdata.accountName,
-//                 bankname:accoountdata.bankName,
-//                 accountNumber: accoountdata.accountNumber,
-//                 banktype:banktype,
-//                 beforeBalance : findUser.balance,
-//                 phoneNumber:findUser.phoneNumber
+  const  accoountdata = findUser.accountDetails[0]
+  let urlcode
+  let banktype 
+  if(accoountdata.bankName == 'Providus Bank'){
+    banktype = "kwati"
+  }else{
+    banktype ="other"
+  }
+
+
+
+ // generate a ref
+
+
+ const refme = {
+   userId: findUser._id,
+   name: findUser.fullname,
+   apiKey: findUser.apiKey,
+   amount: req.body.amount,
+   accountName: accoountdata.accountName,
+   bankName: accoountdata.bankName,
+   accountNumber: accoountdata.accountNumber,
+   date: new Date().getTime() // Add current time in milliseconds
+ };
+ const concatenatedString = `${refme.userId}${refme.name}${refme.apiKey}${refme.amount}${refme.accountName}${refme.bankName}${refme.accountNumber}${refme.date}`;
+ const hash = crypto.createHash('sha256').update(concatenatedString).digest('hex');
+
+// Take the first 30 characters of the hash
+const Ref = hash.slice(0, 30);
+   // // check user balance 
+  if(parseInt(req.body.actualAmount)  > parseInt(findUser.balance)){
+    const data = {
+      status:true,
+      message:"insufficient funds"
+       }
+    return  res.send(data)
+    }
+  
+
+
+
+  
+ 
+              // save transaction
+            const updateBalance = parseInt(findUser.balance ) -  parseInt(req.body.actualAmount)
+              await User.updateMany({apiKey : findUser.apiKey},{$set:{ balance : updateBalance, timelimit: Date.now()}}) 
+              const code =  Math.random().toString(36).substr(2, 6);
+              const cpayload = {
+                userId:req.body.apiKey,
+                amount:req.body.actualAmount,
+                transactionType:"pending",
+                description: "Payment from karaads",
+                order_no: code,
+                afterBalance:updateBalance,
+                TxRef:Ref,
+                accountname:accoountdata.accountName,
+                bankname:accoountdata.bankName,
+                accountNumber: accoountdata.accountNumber,
+                banktype:banktype,
+                beforeBalance : findUser.balance,
+                phoneNumber:findUser.phoneNumber
             
-//             }
+            }
 
-//             console.log("this is tpayload", cpayload)
-//             // save transaction 
-//             const tresponse  = new Transaction({...cpayload})
-//             await tresponse.save()
+            console.log("this is tpayload", cpayload)
+            // save transaction 
+            const tresponse  = new Transaction({...cpayload})
+            await tresponse.save()
 
-//             //check accoount balance 
+            //check accoount balance 
            
         
 
-//       // make transsfer call 
+      // make transsfer call 
 
-//          // Replace spaces with %20
-//     function replaceSpaces(name) {
-//     return name.replace(/ /g, '%20');
-//     }
-//     var bankname = replaceSpaces(accoountdata.bankName);
+         // Replace spaces with %20
+    function replaceSpaces(name) {
+    return name.replace(/ /g, '%20');
+    }
+    var bankname = replaceSpaces(accoountdata.bankName);
 
-//     const payload = {
-//       bank_name: bankname,
-//       bank_code: accoountdata.bankCode,
-//       acc: accoountdata.accountNumber,
-//       desc: "Payment from karaads",
-//       pin: PIN,
-//       from: FROM,
-//       amount : req.body.amount,
-//       actualAmount: req.body.actualAmount
-//     }
+    const payload = {
+      bank_name: bankname,
+      bank_code: accoountdata.bankCode,
+      acc: accoountdata.accountNumber,
+      desc: "Payment from karaads",
+      pin: PIN,
+      from: FROM,
+      amount : req.body.amount,
+      actualAmount: req.body.actualAmount
+    }
 
-//     console.log("this is payload ", payload)
+    console.log("this is payload ", payload)
 
 
-//     if(accoountdata.bankName == 'Providus Bank'){
-//       console.log("for providus here")
-//       urlcode = `${BASEURL}/api/v2/transfer_sbank?from=9625761482&to=${payload.acc}&amount=${payload.actualAmount}&desc=${payload.desc}&pin=${payload.pin}&ref=${Ref}`
-//     }else{
-//       console.log("for noon providus")
-//       urlcode = `${BASEURL}/api/v2/transfer_bank?bank_name=${payload.bank_name}&bank_code=${payload.bank_code}&acc=${payload.acc}&desc=${payload.desc}&pin=${payload.pin}&from=9625761482&amount=${payload.amount}&ref=${Ref}`
-//     }
+    if(accoountdata.bankName == 'Providus Bank'){
+      console.log("for providus here")
+      urlcode = `${BASEURL}/api/v2/transfer_sbank?from=9625761482&to=${payload.acc}&amount=${payload.actualAmount}&desc=${payload.desc}&pin=${payload.pin}&ref=${Ref}`
+    }else{
+      console.log("for noon providus")
+      urlcode = `${BASEURL}/api/v2/transfer_bank?bank_name=${payload.bank_name}&bank_code=${payload.bank_code}&acc=${payload.acc}&desc=${payload.desc}&pin=${payload.pin}&from=9625761482&amount=${payload.amount}&ref=${Ref}`
+    }
 
    
 
 
-//     var options = {
-//     method: 'POST',
-//     url: urlcode,
-//     headers: {
-//       Accept: 'application/json',
-//       Authorization: `Bearer ${TOKEN}`,
-//      cookie :'kwati_bank_session=fFkEG1YVoR1hittEOdCnm9EKDwFDnXxaittPfouC'
-//     }
-//   };
+    var options = {
+    method: 'POST',
+    url: urlcode,
+    headers: {
+      Accept: 'application/json',
+      Authorization: `Bearer ${TOKEN}`,
+     cookie :'kwati_bank_session=fFkEG1YVoR1hittEOdCnm9EKDwFDnXxaittPfouC'
+    }
+  };
 
-//   var coptions = {
-//     method: 'GET',
-//     url: `${BASEURL}/api/v2/transaction_status/${Ref}`,
-//     headers: {
-//       Accept: 'application/json',
-//       Authorization: `Bearer ${TOKEN}`,
-//      cookie :'kwati_bank_session=fFkEG1YVoR1hittEOdCnm9EKDwFDnXxaittPfouC'
-//     }
-//   };
+  var coptions = {
+    method: 'GET',
+    url: `${BASEURL}/api/v2/transaction_status/${Ref}`,
+    headers: {
+      Accept: 'application/json',
+      Authorization: `Bearer ${TOKEN}`,
+     cookie :'kwati_bank_session=fFkEG1YVoR1hittEOdCnm9EKDwFDnXxaittPfouC'
+    }
+  };
 
 
-//   request(options, async function  (error, response) {
+  request(options, async function  (error, response) {
           
-//           console.log(response.body)
-//           var result = JSON.parse(response.body)
-//           console.log("this is result",result);
-//           console.log(result.success)
-//           if(response){
-//             request(coptions, async function  (error, response) {
-//                         // if (error) throw new Error(error);
-//                         if(error){
-//                         const data = {
-//                         status:true,
-//                         message:error
-//                         }
-//                          res.send(data)
+          console.log(response.body)
+          var result = JSON.parse(response.body)
+          console.log("this is result",result);
+          console.log(result.success)
+          if(response){
+            request(coptions, async function  (error, response) {
+                        // if (error) throw new Error(error);
+                        if(error){
+                        const data = {
+                        status:true,
+                        message:error
+                        }
+                         res.send(data)
             
-//                         }
+                        }
 
-//                         console.log("transaction state",response.body)
-//                         var cresult = JSON.parse(response.body)
+                        console.log("transaction state",response.body)
+                        var cresult = JSON.parse(response.body)
             
-//                          if(cresult.message == 'successful'){
-//                           const findTransaction = await Transaction.findOne({TxRef:Ref})
-//                           await User.updateMany({apiKey : findTransaction.userId},{$set:{timelimit: Date.now()}})
-//                           if(findTransaction){
-//                             await Transaction.updateMany({TxRef:Ref},{$set:{ transactionType:"payout", banktype: banktype}}) 
-//                             const data = {
-//                                             status:true,
-//                                             message:`your transfer was successful, your transaction reference is, ${Ref} `
-//                                         }
-//                                   return  res.send(data)
+                         if(cresult.message == 'successful'){
+                          const findTransaction = await Transaction.findOne({TxRef:Ref})
+                          await User.updateMany({apiKey : findTransaction.userId},{$set:{timelimit: Date.now()}})
+                          if(findTransaction){
+                            await Transaction.updateMany({TxRef:Ref},{$set:{ transactionType:"payout", banktype: banktype}}) 
+                            const data = {
+                                            status:true,
+                                            message:`your transfer was successful, your transaction reference is, ${Ref} `
+                                        }
+                                  return  res.send(data)
 
-//                           }
-//                         }
+                          }
+                        }
 
 
 
-//                           if(cresult.message == 'Ref not found.'){
-//                             const findTransaction = await Transaction.findOne({TxRef:Ref})
-//                             if(findTransaction){
-//                               const newfindUser = await User.findOne({apiKey: req.body.apiKey})
-//                               const updateBalance = parseInt(newfindUser.balance ) +  parseInt(req.body.actualAmount)
-//                               await User.updateMany({apiKey : findTransaction.userId},{$set:{ balance : updateBalance, timelimit: Date.now()}})
-//                               await Transaction.updateMany({TxRef:Ref},{$set:{ transactionType:"failed", banktype: banktype, afterBalance:updateBalance,  beforeBalance : newfindUser.balance}})
+                          if(cresult.message == 'Ref not found.'){
+                            const findTransaction = await Transaction.findOne({TxRef:Ref})
+                            if(findTransaction){
+                              const newfindUser = await User.findOne({apiKey: req.body.apiKey})
+                              const updateBalance = parseInt(newfindUser.balance ) +  parseInt(req.body.actualAmount)
+                              await User.updateMany({apiKey : findTransaction.userId},{$set:{ balance : updateBalance, timelimit: Date.now()}})
+                              await Transaction.updateMany({TxRef:Ref},{$set:{ transactionType:"failed", banktype: banktype, afterBalance:updateBalance,  beforeBalance : newfindUser.balance}})
                               
-//                               const data = {
-//                                 status:true,
-//                                 message:`your Transction was not successful`
-//                                }
-//                                return res.send(data)
-//                             }
-//                           }else{
-//                              const data = {
-//                             status:true,
-//                             message:`your Transction is pending, if it does not drop before the end of the day, you will get a reversal`
-//                            }
-//                            return res.send(data)
-//                           }
+                              const data = {
+                                status:true,
+                                message:`your Transction was not successful`
+                               }
+                               return res.send(data)
+                            }
+                          }else{
+                             const data = {
+                            status:true,
+                            message:`your Transction is pending, if it does not drop before the end of the day, you will get a reversal`
+                           }
+                           return res.send(data)
+                          }
 
                          
        
 
-//           })}
+          })}
 
 
 
 
-//           if(error){
-//             const data = {
-//               status:true,
-//               message:`network error please try again later`
-//                }
-//             return  res.send(data)
+          if(error){
+            const data = {
+              status:true,
+              message:`network error please try again later`
+               }
+            return  res.send(data)
 
-//           }
+          }
 
-//         })
+        })
 
 
 
@@ -394,21 +394,21 @@ res.send(data)
 
 
   
-// });
+});
 
 
 
 
    
 
-//   }else{
-//     const data = {
-//             status:true,
-//             message:`you have reached your transfer limit for the day`
-//              }
-//           return  res.send(data)
+  }else{
+    const data = {
+            status:true,
+            message:`you have reached your transfer limit for the day`
+             }
+          return  res.send(data)
    
-//   }
+  }
 
 
 
