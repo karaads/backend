@@ -13,60 +13,60 @@ export const Signup = async (req, res) => {
     const password = await hashPassword(req.body.password);
     const user = new User({pin, fullname, firstName, lastName, email, password, address, city, state, zip, phoneNumber, dateOfBirth, apiKey, userType, vendorCode, referalCode:code});
 
-    function isValidEmail() {
-        // Regular expression for basic email validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
-      }
+    // function isValidEmail() {
+    //     // Regular expression for basic email validation
+    //     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    //     return emailRegex.test(email);
+    //   }
 
-      function validatePhoneNumber(phoneNumber) {
-        // Regular expression for a phone number validation
-        var phoneRegex = /^0\d{10}$/;
+    //   function validatePhoneNumber(phoneNumber) {
+    //     // Regular expression for a phone number validation
+    //     var phoneRegex = /^0\d{10}$/;
       
-        // Test the phone number against the regular expression
-        var isValid = phoneRegex.test(phoneNumber);
+    //     // Test the phone number against the regular expression
+    //     var isValid = phoneRegex.test(phoneNumber);
       
-        return isValid;
-      }
+    //     return isValid;
+    //   }
 
         
-  function validatePin(pin) {
-    // Regular expression for a PIN validation
-    var pinRegex = /^\d{4}$/;
+//   function validatePin(pin) {
+//     // Regular expression for a PIN validation
+//     var pinRegex = /^\d{4}$/;
   
-    // Test the PIN against the regular expression
-    var isValid = pinRegex.test(pin);
+//     // Test the PIN against the regular expression
+//     var isValid = pinRegex.test(pin);
   
-    return isValid;
-  }
+//     return isValid;
+//   }
   
-  function validateAge(age) {
-    // Regular expression for age validation
-    var ageRegex = /^(1[89]|[2-9]\d+)$/;
+//   function validateAge(age) {
+//     // Regular expression for age validation
+//     var ageRegex = /^(1[89]|[2-9]\d+)$/;
   
-    // Test the age against the regular expression and check for non-empty string
-    var isValid = ageRegex.test(age) && age.trim() !== '';
+//     // Test the age against the regular expression and check for non-empty string
+//     var isValid = ageRegex.test(age) && age.trim() !== '';
   
-    return isValid;
-  }
+//     return isValid;
+//   }
 
-if (!isValidEmail(email)) {
- return res.status(200).send({ 
-    msg: "invalide email"
+// if (!isValidEmail(email)) {
+//  return res.status(200).send({ 
+//     msg: "invalide email"
 
-});
-}
+// });
+// }
 
-if(!validatePhoneNumber(phoneNumber)){
-    return res.status(200).send({msg:"Invalid Phone Number!"})
-}
-if(!validateAge(age)){
-    return res.status(200).send({msg:"Please enter valid Age!"})
-}
+// if(!validatePhoneNumber(phoneNumber)){
+//     return res.status(200).send({msg:"Invalid Phone Number!"})
+// }
+// if(!validateAge(age)){
+//     return res.status(200).send({msg:"Please enter valid Age!"})
+// }
 
-if(!validatePin(pin)){
-    return res.status(200).send({msg:`Invalid piin`})
-}
+// if(!validatePin(pin)){
+//     return res.status(200).send({msg:`Invalid piin`})
+// }
 
 
 
