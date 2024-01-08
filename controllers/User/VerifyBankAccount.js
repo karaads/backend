@@ -111,12 +111,12 @@ export const verifyBankAccount =  async( req, res)=>{
 
  export  const verifyTransfer = async (req, res)=>{
 
-//   const data = {
-//     status:true,
-//     message:"Transfer is Unavailable at the moment, please try again later"
+  const data = {
+    status:true,
+    message:"Transfer is Unavailable at the moment, please try again later"
   
-// }
-// res.send(data)
+}
+return res.send(data)
   
   
   const findUser = await User.findOne({apiKey: req.body.apiKey})
@@ -144,7 +144,7 @@ export const verifyBankAccount =  async( req, res)=>{
   
 
 
-  if(differenceInHours > 1440){
+  if(differenceInHours > 0){
     console.log("all clear")
 
 
@@ -168,7 +168,7 @@ request(aoptions, async function (error, response) {
   }
 
   var result = JSON.parse(response.body);
-  if (result[0].balance <= 300000) {
+  if (result[0].balance < 300000) {
     const data = {
       status: true,
       message: "Network is temporary Unavailable at the moment"
