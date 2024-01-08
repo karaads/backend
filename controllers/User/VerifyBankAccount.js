@@ -100,7 +100,7 @@ export const verifyBankAccount =  async( req, res)=>{
   const currenttime = new Date()
   const data = {
           status:true,
-          message:"Transfer is Unavailable at the moment, we are working hard to bring this update to you soon"
+          message:"If you are seeing this message it means you are using an older version of our app please update your app"
         
       }
       res.send(data)

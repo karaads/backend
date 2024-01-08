@@ -19,15 +19,15 @@ export const Signup = async (req, res) => {
     //     return emailRegex.test(email);
     //   }
 
-    //   function validatePhoneNumber(phoneNumber) {
-    //     // Regular expression for a phone number validation
-    //     var phoneRegex = /^0\d{10}$/;
+      function validatePhoneNumber(phoneNumber) {
+        // Regular expression for a phone number validation
+        var phoneRegex = /^0\d{10}$/;
       
-    //     // Test the phone number against the regular expression
-    //     var isValid = phoneRegex.test(phoneNumber);
+        // Test the phone number against the regular expression
+        var isValid = phoneRegex.test(phoneNumber);
       
-    //     return isValid;
-    //   }
+        return isValid;
+      }
 
         
 //   function validatePin(pin) {
@@ -57,9 +57,9 @@ export const Signup = async (req, res) => {
 // });
 // }
 
-// if(!validatePhoneNumber(phoneNumber)){
-//     return res.status(200).send({msg:"Invalid Phone Number!"})
-// }
+if(!validatePhoneNumber(phoneNumber)){
+    return res.status(200).send({msg:"Invalid Phone Number!"})
+}
 // if(!validateAge(age)){
 //     return res.status(200).send({msg:"Please enter valid Age!"})
 // }
